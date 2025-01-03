@@ -42,7 +42,7 @@ const Signup = () => {
       return;
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/users/signup`,{
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/signup`,{
         name : formData.name,
         email: formData.email,
         password : formData.password
@@ -66,7 +66,7 @@ const Signup = () => {
   return (
 
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <Box
       sx={{
         maxWidth: 400,

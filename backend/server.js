@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const app = express();
-const cors= require("cors")
+const cors = require("cors")
 const cookieParser = require('cookie-parser');
 app.use(
     cors({
@@ -10,17 +10,21 @@ app.use(
         credentials: true, // Required for cookies
         allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
     })
-    );
-    app.use(express.json());
-app.use("/users", require("./routes/userroutes"))
-const dbConfig= require("./db/dbConfig");
+);
+app.use(express.json());
+    
 app.use(cookieParser());
+
+app.use("/user", require("./routes/userroutes"))
+
+const dbConfig = require("./db/dbConfig");
+
 
 const PORT = process.env.PORT || 8081;
 app.get("/", (req, res) => {
     res.send("Server is running!");
 });
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log("App Started at Port:", PORT)
 })
 

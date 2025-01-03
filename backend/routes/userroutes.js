@@ -61,7 +61,6 @@ router.post("/login", async (req, res) => {
             secure: true,
             sameSite: 'none',
           }).json({_id:existingUser._id})
-          .send("Logged in!");
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -69,14 +68,63 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/login/status", async(req,res)=>{
-    const token = req.cookies.token;
-
-    if(!token) return res.send(false);
-
-    const loggenIn= jwt.verify(token, process.env.JWT_SECRET);
-    if (!loggenIn) return res.send(false)
-    return res.send(true)
+    try {
+        const token = req.cookies.token;
+        if (!token) return res.status(200).send(false); // No token means not authenticated
+        
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        // console.log( verified)
+        if (!verified) return res.status(200).send(false); // Invalid token means not authenticated
+        
+        return res.status(200).send(true); // Token is valid
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
 })
 
+
+router.get("/logout", (req, res) => {
+    console.log("cookies sent to the backend: ",req.cookies)
+    try {
+        
+        return res
+    .cookie("token", "", {
+      expires: new Date(0),
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none'
+    })
+    .send();
+    } catch (error) {
+        console.log(err, "error while logging out")
+    }
+});
+
+router.get("/getUserData", async(req,res)=>{
+    try {
+        // Get token from cookies
+        const token = req.cookies.token;
+    
+        if (!token) {
+          return res.status(401).json({ message: "Unauthorized. Token not found." });
+        }
+    
+        // Decode the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+        // Fetch user data from the database
+        const user = await userModels.findById(decoded._id);
+    
+        if (!user) {
+          return res.status(404).json({ message: "User not found." });
+        }
+    
+        // Send user data
+        return res.json({name:user.name,email:user.email, _id:user._id});
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        return res.status(401).json({ message: "Invalid or expired token." });
+      }
+})
 
 module.exports = router;

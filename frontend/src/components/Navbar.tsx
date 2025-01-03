@@ -4,10 +4,36 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import axiosInstance from "../axios/axiosInstance";
 
 const Navbar = () => {
-  const [loginStatus, setLoginStatus]= React.useState(false)
+  const {isAuthenticated, setIsAuthenticated} = useAuth();
+  const navigate  = useNavigate();
+  const handleLogout = async() =>{
+    try {
+      
+      if(isAuthenticated){
+        const response = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/user/logout`);
+        console.log("trying to log out")
+        if(response.status === 200){
+          console.log(response.data.message)
+          console.log("Status 200 received");
+          setIsAuthenticated(false)
+          navigate("/login")
+        }
+        else{
+          console.log("Logout Failed")
+        }
+      }
+      else console.log("Not logged in in the first place so can not logout")
+    } catch (error) {
+      console.log(error, "error while logging out")
+    }
+  }
+
+
   return (
     <AppBar position="static" className="bg-blue-700 text-white shadow-lg">
       <Toolbar className="flex justify-between">
@@ -55,7 +81,7 @@ const Navbar = () => {
         {/* Login Button */}
         <div>
           {
-            !loginStatus &&
+            !isAuthenticated && isAuthenticated == false ?
             <Link to={'/login'}>
           <Button
             variant="outlined"
@@ -64,7 +90,8 @@ const Navbar = () => {
             >
             Login
           </Button>
-            </Link>
+            </Link> : 
+            <Button variant = "outlined" color="inherit" className="hover:bg-white hover:text-blue-600" onClick={handleLogout} >Logout</Button>
           }
         </div>
       </Toolbar>

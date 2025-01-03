@@ -1,12 +1,16 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
+import Navbar from "../../components/Navbar";
+import Iconsbar from "../../components/Iconsbar"
+import Profile from "./Profile";
+import { useContext } from "react";
+import IconsBarContext from "../../components/Iconsbar"
+
 
 const Dashboard = () => {
+  
   return (
     <>
-        <Navbar/>
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
