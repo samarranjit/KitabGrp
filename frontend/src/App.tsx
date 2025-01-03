@@ -13,10 +13,11 @@ import Profile from "./pages/Users/Profile";
 import Navbar from "./components/Navbar";
 import { useAuth } from "./contexts/AuthContext";
 import Iconsbar from "./components/Iconsbar";
+import Book from "./pages/Users/Book";
 
 function App() {
   const {isAuthenticated, loadingAuth} = useAuth();
-  console.log("App: ", isAuthenticated)
+  // console.log("App: ", isAuthenticated)
     return (
             <BrowserRouter>
                 <Navbar />
@@ -40,6 +41,14 @@ function App() {
                         element={
                             <ProtectedRoutes>
                                 <Profile />
+                            </ProtectedRoutes>
+                        }
+                    />
+                    <Route
+                        path="/user/dashboard/books"
+                        element={
+                            <ProtectedRoutes>
+                                <Book />
                             </ProtectedRoutes>
                         }
                     />

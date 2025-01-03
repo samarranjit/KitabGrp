@@ -5,6 +5,9 @@ interface User {
     name: string;
     email: string;
     _id: string;
+    followers: string,
+    bio: string,
+    birthDate : string
 }
 
 interface AuthContext {
@@ -23,7 +26,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         name: "",
         email: "",
         _id: "",
-      });
+        followers: '',
+        bio: "",
+        birthDate : ""
+    }
+      );
 
     useEffect(() => {
         const authenticate = async () => {

@@ -120,7 +120,7 @@ router.get("/getUserData", async(req,res)=>{
         }
     
         // Send user data
-        return res.json({name:user.name,email:user.email, _id:user._id});
+        return res.json(user);
       } catch (error) {
         console.error("Error decoding token:", error);
         return res.status(401).json({ message: "Invalid or expired token." });

@@ -7,8 +7,8 @@ import { useAuth } from '../contexts/AuthContext';
 const ProtectedRoutes = ({ children }:{children:React.ReactNode}) => {
     const {isAuthenticated, loadingAuth} = useAuth();
     
-    console.log("Authenticated: ",isAuthenticated) ;
-    console.log("Loading: ",loadingAuth)
+    // console.log("Authenticated: ",isAuthenticated) ;
+    // console.log("Loading: ",loadingAuth)
     
     if (loadingAuth) 
     return <div>Loading...</div>

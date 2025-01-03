@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 const Iconsbar = () => {
   const [value, setValue] = React.useState(0);
 
-  console.log("Hi from iconbar")
+  // console.log("Hi from iconbar")
 
 
   return (

@@ -15,6 +15,20 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        bio : {
+            type: String
+        },
+        birthDate:{
+            type : String
+        },
+        followers :{
+            type : String
+        },
+        genre:{
+            type: String
+        }
+
+
     },
     { timestamps: true }
 
