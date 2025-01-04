@@ -26,9 +26,12 @@ interface Alert {
 
 import { useAuth } from "../../contexts/AuthContext";
 import axiosInstance from "../../axios/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
   const { user } = useAuth();
+
+  const navigate= useNavigate()
 
   const [alert, setAlert] = useState<Alert | null>(null);
 
@@ -183,7 +186,7 @@ const AddBook = () => {
             Submit Review
           </Button>
           <Button
-            type="submit"
+            onClick={()=>{navigate("/user/dashboard/books")}}
             variant="text"
             color="primary"
             sx={{ alignSelf: "center", mt: 2 }}
