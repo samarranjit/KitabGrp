@@ -122,9 +122,27 @@ router.get("/getUserData", async(req,res)=>{
         // Send user data
         return res.json(user);
       } catch (error) {
-        console.error("Error decoding token:", error);
+        // console.error("Error decoding token:", error);
         return res.status(401).json({ message: "Invalid or expired token." });
       }
 })
+router.post("/profile/edit", async (req, res) => {
+    try {
+      const result = await userModels.findOneAndUpdate(
+        { _id: req.body._id },
+        { $set: req.body },
+        {new: true}
+      );
+    //   console.log(result)
+  
+      if (result) {
+          res.status(200).send({ message: "Your Profile was Updated Successfully" });
+      }
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "An error occurred while updating your profile" });
+    }
+  });
 
 module.exports = router;

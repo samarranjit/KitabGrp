@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import FloatingAddBtn from "../../../components/FloatingAddBtn";
 
 const Book = () => {
   return (
@@ -20,40 +21,44 @@ const Book = () => {
         //   justifyContent: "center", // Center items vertically
         height: "100vh", // Full viewport height
         gap: 3, // Space between the input and the card
-        padding : "2rem"
+        padding: "2rem",
       }}
     >
+      <FloatingAddBtn/>
+      
       <Input
-        placeholder="Search Book"
+        placeholder="Search Discussion"
         sx={{ width: "50%", maxWidth: 400 }} // Responsive width
+        fullWidth
       />
       <Button variant="contained">Search</Button>
 
-      <Box
-        className=""
-      >
-
-      <Card sx={{ maxWidth: 345, width: "100%" }}>
-        <CardMedia
-          sx={{ height: 140 }}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica.
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
+      <Typography variant="h5" textAlign="left" >Start a discussion:</Typography>
       
+      <Box className="">
+        <Card sx={{ maxWidth: 345, width: "100%" }}>
+          <CardMedia
+            sx={{ height: 140 }}
+            image="/static/images/cards/contemplative-reptile.jpg"
+            title="green iguana"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Lizard
+            </Typography>
+            <Typography gutterBottom variant="subtitle2" component="div">
+              Lizard
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              Lizards are a widespread group of squamate reptiles, with over
+              6,000 species, ranging across all continents except Antarctica.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small">Share</Button>
+            <Button size="small">Learn More</Button>
+          </CardActions>
+        </Card>
       </Box>
     </Box>
   );

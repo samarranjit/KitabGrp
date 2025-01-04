@@ -1,195 +1,160 @@
-// src/pages/Users/Profile.tsx
-// import { useActiveUserContext } from '../../contexts/ActiveUserContext';
 import {
   Typography,
-  Card,
-  CardContent,
   Paper,
   Box,
   Avatar,
   Button,
+  Card,
+  CardContent,
   CardActions,
   Input,
 } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
+import axiosInstance from "../../axios/axiosInstance";
 
 const Profile = () => {
-  const { user } = useAuth(); // Accessing the user object directly from context
-  // console.log(user);
-  const [editingProfile, setEditingProfile] = useState<boolean>(false);
-  // console.log(editingPrs fofile);
+  const { user, setUser } = useAuth(); // Access user object from context
+  // console.log(user&& user)
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [editingUser, setEditingUser] = useState({
+    _id: user?._id || "",
+    name: user?.name || "",
+    email: user?.email || "",
+    bio: user?.bio || "",
+    birthDate: user?.birthDate || "",
+    genre: user?.genre || "",
+    followers: user?.followers || ""
+  });
 
   const imageUrl =
     "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
 
-  const handleEdit = () => {};
+  const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditingUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
-  const handleRightClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault(); // Prevents the right-click menu from showing
+    console.log(editingUser)
   };
+
+  const handleSave = async() => {
+    // Save updated profile logic
+    console.log("Saving profile", editingUser);
+
+    const response = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/user/profile/edit`,{
+      _id : editingUser?._id || user._id,
+      name: editingUser?.name || user.name,
+      email: editingUser?.email || user.email,
+      bio: editingUser?.bio || user.bio,
+      birthDate: editingUser?.birthDate || user.birthDate,
+      genre: editingUser?.genre || user.genre,
+    })
+
+    if(response.status === 200){
+      setUser(editingUser)
+      console.log(user)
+      console.log(response.data.message)
+    }
+
+    setEditingProfile(false);
+  };
+
   return (
-    <>
-      <div style={{ padding: "20px" }}>
-        <Typography
-          variant="h6"
-          textAlign={"center"}
-          paddingY={"2rem"}
-          gutterBottom
-        >
-          Your Profile Information:
-        </Typography>
+    <div style={{ padding: "20px" }}>
+      <Typography variant="h6" textAlign="center" paddingY="2rem" gutterBottom>
+        Your Profile Information:
+      </Typography>
 
-        {/* User Info Card */}
-
-        <Paper
-          elevation={3}
-          style={{
-            padding: "20px",
-            maxWidth: "600px",
-            margin: "0 auto",
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
+      <Paper
+        elevation={3}
+        style={{
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar
+          src={imageUrl}
+          alt={`${editingUser.name}'s profile`}
+          sx={{
+            width: 120,
+            height: 120,
+            border: "2px solid #005B96",
           }}
-        >
-          <Typography variant="h6" padding={"1rem"}>
-            Followers : {user.followers}
-          </Typography>
-          {editingProfile && editingProfile ? (
-            //editing Prfile True
-            <>
-              {editingProfile?
-              <>
-              <Input type="file">
-                <Avatar
-                onContextMenu={handleRightClick}
-                // onClick={() => (editingProfile ? alert("Hello") : "")}
-                src={imageUrl}
-                alt={`${user && user.name}'s profile`}
-                sx={{
-                  width: 120,
-                  height: 120,
-                  border: "2px solid #005B96", // Optional border
-                }}
-                />
-                </Input>
-                </>
-              
-              :
-                <Avatar
-                onContextMenu={handleRightClick}
-                // onClick={() => (editingProfile ? alert("Hello") : "")}
-                src={imageUrl}
-                alt={`${user && user.name}'s profile`}
-                sx={{
-                  width: 120,
-                  height: 120,
-                  border: "2px solid #005B96", // Optional border
-                }}
-              />}
-              <Card sx={{ width: "100%" }}>
-                <CardContent>
-                  <Box
-                    display="flex"
-                    flexGrow={12}
-                    flexDirection={{ xs: "column", md: "column" }}
-                    gap={2}
-                  >
-                    <Box flex={1}>
-                      <Typography variant="h6">Name:</Typography>
-                      <Input value={user.name} name="userName"></Input>
-                    </Box>
-                    <Box flex={1}>
-                      <Typography variant="h6">Email:</Typography>
-                      <Input value={user.email} name="userEmail"></Input>
-                    </Box>
-                    <Box flex={1}>
-                      <Typography variant="h6">Bio:</Typography>
-                      <Input value={user.bio} name="userEmail"></Input>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            </>
-          ) : (
-            //Profile Editing is false
-            <>
-              <Avatar
-                onContextMenu={handleRightClick}
-                src={imageUrl}
-                alt={`${user && user.name}'s profile`}
-                sx={{
-                  width: 120,
-                  height: 120,
-                  border: "2px solid #005B96", // Optional border
-                }}
-              />
-              <Card sx={{ width: "100%" }}>
-                <CardContent>
-                  <Box
-                    display="flex"
-                    flexGrow={12}
-                    flexDirection={{ xs: "column", md: "column" }}
-                    gap={2}
-                  >
-                    <Box flex={1}>
-                      <Typography variant="h6">Name:</Typography>
-                      <Typography variant="body1">
-                        {user && user ? user.name : ""}
-                      </Typography>
-                    </Box>
-                    <Box flex={1}>
-                      <Typography variant="h6">Email:</Typography>
-                      <Typography variant="body1">
-                        {user && user ? user.email : ""}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            </>
-          )}
+        />
 
-          <CardActions>
-            {/* Button to edit details and profile picture */}
-            {editingProfile ? (
-              <>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleEdit} // Submit the updated data
-                  sx={{ marginLeft: "auto", marginTop: 2 }}
-                >
-                  Save Changes
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={()=>setEditingProfile(false)} // Submit the updated data
-                  sx={{ marginLeft: "auto", marginTop: 2 }}
-                >
-                  Cancel
-                </Button>
-              </>
-            ) : (
+        <Card sx={{ width: "100%", marginTop: 2 }}>
+          <CardContent>
+            <Box display="flex" flexDirection="column" gap={2}>
+              <Box>
+                <Typography variant="h6">Name:</Typography>
+                {editingProfile ? (
+                  <Input
+                    value={editingUser.name}
+                    name="name"
+                    onChange={handleEdit}
+                    fullWidth
+                  />
+                ) : (
+                  <Typography variant="body1">{user.name}</Typography>
+                )}
+              </Box>
+              <Box>
+                <Typography variant="h6">Email:</Typography>
+                {editingProfile ? (
+                  <Input
+                    value={editingUser.email}
+                    name="email"
+                    onChange={handleEdit}
+                    fullWidth
+                  />
+                ) : (
+                  <Typography variant="body1">{user.email}</Typography>
+                )}
+              </Box>
+            </Box>
+          </CardContent>
+        </Card>
+
+        <CardActions>
+          {editingProfile ? (
+            <>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  setEditingProfile((prev) => !prev); // Toggle edit mode
-                }}
-                sx={{ marginLeft: "auto", marginTop: 2 }}
+                onClick={handleSave}
+                sx={{ marginTop: 2 }}
               >
-                Edit Profile
+                Save Changes
               </Button>
-            )}
-          </CardActions>
-        </Paper>
-      </div>
-    </>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => setEditingProfile(false)}
+                sx={{ marginTop: 2 }}
+              >
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setEditingProfile(true)}
+              sx={{ marginTop: 2 }}
+            >
+              Edit Profile
+            </Button>
+          )}
+        </CardActions>
+      </Paper>
+    </div>
   );
 };
 
