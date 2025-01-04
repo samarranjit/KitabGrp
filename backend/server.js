@@ -5,7 +5,7 @@ const cors = require("cors")
 const cookieParser = require('cookie-parser');
 app.use(
     cors({
-        origin: "http://localhost:5173"||"https://kitab-khana.vercel.app", // Replace with your frontend URL
+        origin: process.env.VITE_APP_FRONTEND_URL, // Replace with your frontend URL
         methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow the HTTP methods you need
         credentials: true, // Required for cookies
         allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
