@@ -18,7 +18,7 @@ import Book from "./pages/Users/Book";
 function App() {
   const {isAuthenticated, loadingAuth} = useAuth();
   // console.log("App: ", isAuthenticated)
-    return (
+    return (<>
             <BrowserRouter>
                 <Navbar />
                 <Routes>
@@ -35,7 +35,7 @@ function App() {
                                 <Dashboard />
                             </ProtectedRoutes>
                         }
-                    />
+                        />
                     <Route
                         path="/user/dashboard/profile"
                         element={
@@ -43,7 +43,7 @@ function App() {
                                 <Profile />
                             </ProtectedRoutes>
                         }
-                    />
+                        />
                     <Route
                         path="/user/dashboard/books"
                         element={
@@ -51,10 +51,11 @@ function App() {
                                 <Book />
                             </ProtectedRoutes>
                         }
-                    />
+                        />
                 </Routes>
                {(isAuthenticated && !loadingAuth) && <Iconsbar />}
             </BrowserRouter>
+                        </>
     );
 }
 
