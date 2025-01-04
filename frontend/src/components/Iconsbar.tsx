@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import BookIcon from "@mui/icons-material/Book";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
 const Iconsbar = () => {
@@ -24,22 +24,22 @@ const Iconsbar = () => {
       >
         {/* <IconsBarContext.Provider value={{iconsbarPage}}>  */}
         
-        <Link to={"/user/dashboard/feed"}>
+        <NavLink to={"/user/dashboard/feed"}>
 
         <BottomNavigationAction label="Feed" icon={<HomeIcon />}  />
-        </Link>
-        <Link to={"/user/dashboard/books"}>
+        </NavLink>
+        <NavLink to={"/user/dashboard/books"}>
 
         <BottomNavigationAction label="Books"  icon={<BookIcon />}  />
-        </Link>
-        <Link to={"/user/dashboard/profile"}>
+        </NavLink>
+        <NavLink to={"/user/dashboard/profile"}>
 
         <BottomNavigationAction label="Profile" icon={<PersonIcon />}  />
-        </Link>
-        <Link to={"/user/dashboard/about"}>
+        </NavLink>
+        <NavLink to={"/user/dashboard/about"}>
 
         <BottomNavigationAction label="About" icon={<InfoIcon />}  />
-        </Link>
+        </NavLink>
         {/* </IconsBarContext.Provider> */}
       </BottomNavigation>
 
