@@ -1,26 +1,15 @@
-import React, { createContext, useContext, useState } from "react";
+import React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import HomeIcon from '@mui/icons-material/Home';
 import BookIcon from "@mui/icons-material/Book";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
-import { Paper } from "@mui/material";
 import { Link } from "react-router-dom";
 
-// interface IconsBarContextType {
-//   iconsbarPage: string;
-// }
-
-// const [iconsbarPage, setIconsBarPage]= useState<IconsBarContextType>({iconsbarPage:""});
-
-// export const IconsBarContext = createContext({
-//   iconsbarPage: ""
-
-// });
 
 const Iconsbar = () => {
-  const [value, setValue] = React.useState(0);
+  const [value] = React.useState(0);
 
   // console.log("Hi from iconbar")
 
@@ -31,7 +20,6 @@ const Iconsbar = () => {
       {/* Icon Bar */}
       <BottomNavigation
         value={value}
-        onChange={(event, newValue) => setValue(newValue)}
         style={{ backgroundColor: "#f5f5f5", zIndex:10, position:"fixed", bottom:0, left:0, width: "100vw" }}
       >
         {/* <IconsBarContext.Provider value={{iconsbarPage}}>  */}

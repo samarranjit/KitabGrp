@@ -7,7 +7,6 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import Navbar from "../../components/Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

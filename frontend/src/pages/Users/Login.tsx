@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Box, TextField, Button, Typography, CircularProgress, Alert } from "@mui/material";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import axiosInstance from "../../axios/axiosInstance";
 
 const Login = () => {
   const { isAuthenticated, loadingAuth, setIsAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>(""); 
   const [password, setPassword] = useState<string>(""); 

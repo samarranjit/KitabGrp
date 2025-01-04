@@ -8,7 +8,6 @@ import {
   Input,
   Typography,
 } from "@mui/material";
-import React from "react";
 import FloatingAddBtn from "../../../components/FloatingAddBtn";
 
 const Book = () => {
