@@ -24,19 +24,19 @@ const Iconsbar = () => {
       >
         {/* <IconsBarContext.Provider value={{iconsbarPage}}>  */}
         
-        <Link to={"/user/dashboard/Feed"}>
+        <Link to={"/user/dashboard/feed"}>
 
         <BottomNavigationAction label="Feed" icon={<HomeIcon />}  />
         </Link>
-        <Link to={"/user/dashboard/Books"}>
+        <Link to={"/user/dashboard/books"}>
 
         <BottomNavigationAction label="Books"  icon={<BookIcon />}  />
         </Link>
-        <Link to={"/user/dashboard/Profile"}>
+        <Link to={"/user/dashboard/profile"}>
 
         <BottomNavigationAction label="Profile" icon={<PersonIcon />}  />
         </Link>
-        <Link to={"/user/dashboard/About"}>
+        <Link to={"/user/dashboard/about"}>
 
         <BottomNavigationAction label="About" icon={<InfoIcon />}  />
         </Link>
