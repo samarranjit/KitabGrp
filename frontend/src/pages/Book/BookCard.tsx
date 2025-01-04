@@ -1,5 +1,4 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 const BookCard = () => {

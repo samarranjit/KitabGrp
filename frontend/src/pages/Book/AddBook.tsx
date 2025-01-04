@@ -56,6 +56,7 @@ const AddBook = () => {
     event: React.SyntheticEvent,
     value: number | null
   ) => {
+    console.log(event)
     setFormData({ ...formData, rating: value });
   };
 

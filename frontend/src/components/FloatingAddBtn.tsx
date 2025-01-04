@@ -23,9 +23,6 @@ const FloatingButton = () => {
     setAnchorEl(null);
   };
 
-  const handleOptionClick = (option: string) => {
-
-  };
 
   return (
     <Box sx={{ position: "fixed", bottom: "4rem", right: "2rem" }}>
@@ -58,10 +55,10 @@ const FloatingButton = () => {
         <MenuItem onClick={() => {navigate("/user/addBook"); handleClose()}}>
           Add a Book
         </MenuItem>
-        <MenuItem onClick={() => handleOptionClick("View Book List")}>
+        <MenuItem >
           View Book List
         </MenuItem>
-        <MenuItem onClick={() => handleOptionClick("Manage Categories")}>
+        <MenuItem>
           Manage Categories
         </MenuItem>
       </Menu>
