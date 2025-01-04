@@ -13,7 +13,8 @@ import Profile from "./pages/Users/Profile";
 import Navbar from "./components/Navbar";
 import { useAuth } from "./contexts/AuthContext";
 import Iconsbar from "./components/Iconsbar";
-import Book from "./pages/Users/Book";
+import Book from "./pages/Book";
+import AddBook from "./pages/Book/AddBook";
 
 function App() {
   const {isAuthenticated, loadingAuth} = useAuth();
@@ -49,6 +50,14 @@ function App() {
                         element={
                             <ProtectedRoutes>
                                 <Book />
+                            </ProtectedRoutes>
+                        }
+                        />
+                    <Route
+                        path="/user/addBook"
+                        element={
+                            <ProtectedRoutes>
+                                <AddBook />
                             </ProtectedRoutes>
                         }
                         />

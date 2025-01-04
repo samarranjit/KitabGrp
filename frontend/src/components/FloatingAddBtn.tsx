@@ -7,8 +7,10 @@ import {
   Tooltip,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 const FloatingButton = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -22,8 +24,7 @@ const FloatingButton = () => {
   };
 
   const handleOptionClick = (option: string) => {
-    alert(`Selected: ${option}`);
-    handleClose();
+
   };
 
   return (
@@ -54,7 +55,7 @@ const FloatingButton = () => {
         }}
         style={{position:"fixed"}}
       >
-        <MenuItem onClick={() => handleOptionClick("Add a Book")}>
+        <MenuItem onClick={() => {navigate("/user/addBook"); handleClose()}}>
           Add a Book
         </MenuItem>
         <MenuItem onClick={() => handleOptionClick("View Book List")}>

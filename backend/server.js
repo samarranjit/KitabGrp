@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/user", require("./routes/userroutes"))
+app.use("/user/book", require("./routes/bookroutes"))
 
 const dbConfig = require("./db/dbConfig");
 
