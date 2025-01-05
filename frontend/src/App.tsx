@@ -15,6 +15,7 @@ import { useAuth } from "./contexts/AuthContext";
 import Iconsbar from "./components/Iconsbar";
 import Book from "./pages/Book";
 import AddBook from "./pages/Book/AddBook";
+import { BookInfoProvider } from "./contexts/BooksInfoContext";
 
 function App() {
   const {isAuthenticated, loadingAuth} = useAuth();
@@ -49,7 +50,10 @@ function App() {
                         path="/user/dashboard/books"
                         element={
                             <ProtectedRoutes>
+                                <BookInfoProvider>
+
                                 <Book />
+                                </BookInfoProvider>
                             </ProtectedRoutes>
                         }
                         />

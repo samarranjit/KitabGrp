@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         );
         setIsAuthenticated(response.data);
         if (response.data === true) {
-          const userRes = await axiosInstance(
+          const userRes = await axiosInstance.get(
             `${import.meta.env.VITE_API_BASE_URL}/user/getUserData`,
             { withCredentials: true }
           );

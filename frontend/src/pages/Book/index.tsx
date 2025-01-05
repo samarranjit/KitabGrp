@@ -1,13 +1,13 @@
-import {
-  Box,
-  Button,
-  Input,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Input, Typography } from "@mui/material";
 import FloatingAddBtn from "../../components/FloatingAddBtn";
 import BookCard from "./BookCard";
+import { BooksContext } from "../../contexts/BooksInfoContext";
+import Grid from "@mui/material/Grid";
+
 
 const Book = () => {
+  const { bookInfo } = BooksContext();
+  console.log(bookInfo?.map((book) => console.log(book)));
   return (
     <Box
       sx={{
@@ -20,8 +20,8 @@ const Book = () => {
         padding: "2rem",
       }}
     >
-      <FloatingAddBtn/>
-      
+      <FloatingAddBtn />
+
       <Input
         placeholder="Search Discussion"
         sx={{ width: "50%", maxWidth: 400 }} // Responsive width
@@ -29,10 +29,25 @@ const Book = () => {
       />
       <Button variant="contained">Search</Button>
 
-      <Typography variant="h5" textAlign="left" >Start a discussion:</Typography>
-      
-      <BookCard></BookCard>
-      
+      <Typography variant="h5" textAlign="left">
+        Start a discussion:
+      </Typography>
+
+      <Grid container spacing={3} justifyContent="center" alignContent={"center"} paddingBottom="5rem">
+        {bookInfo &&
+          bookInfo.map((book) => (
+            <Grid
+              key={book?.title}
+              item
+              xs={12} // Full width on small screens
+              sm={6} // 2 columns on medium screens
+              md={4} // 3 columns on large screens
+              lg={3}
+            >
+              <BookCard key={book?._id} Book={book} />
+            </Grid>
+          ))}
+      </Grid>
     </Box>
   );
 };
