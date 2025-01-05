@@ -16,60 +16,69 @@ import Iconsbar from "./components/Iconsbar";
 import Book from "./pages/Book";
 import AddBook from "./pages/Book/AddBook";
 import { BookInfoProvider } from "./contexts/BooksInfoContext";
+import BookPage from "./pages/Book/BookPage";
 
 function App() {
-  const {isAuthenticated, loadingAuth} = useAuth();
+  const { isAuthenticated, loadingAuth } = useAuth();
   // console.log("App: ", isAuthenticated)
-    return (<>
-            <BrowserRouter>
-                <Navbar />
-                <Routes>
-                    <Route path="/about" element={<About />} />
-                    <Route path="/" element={<Home />} />
-                    <Route path="/features" element={<Features />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route
-                        path="/user/dashboard"
-                        element={
-                            <ProtectedRoutes>
-                                <Dashboard />
-                            </ProtectedRoutes>
-                        }
-                        />
-                    <Route
-                        path="/user/dashboard/profile"
-                        element={
-                            <ProtectedRoutes>
-                                <Profile />
-                            </ProtectedRoutes>
-                        }
-                        />
-                    <Route
-                        path="/user/dashboard/books"
-                        element={
-                            <ProtectedRoutes>
-                                <BookInfoProvider>
-
-                                <Book />
-                                </BookInfoProvider>
-                            </ProtectedRoutes>
-                        }
-                        />
-                    <Route
-                        path="/user/addBook"
-                        element={
-                            <ProtectedRoutes>
-                                <AddBook />
-                            </ProtectedRoutes>
-                        }
-                        />
-                </Routes>
-               {(isAuthenticated && !loadingAuth) && <Iconsbar />}
-            </BrowserRouter>
-                        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/about" element={<About />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/user/dashboard"
+            element={
+              <ProtectedRoutes>
+                <Dashboard />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/user/dashboard/profile"
+            element={
+              <ProtectedRoutes>
+                <Profile />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/user/dashboard/books"
+            element={
+              <ProtectedRoutes>
+                <BookInfoProvider>
+                  <Book />
+                </BookInfoProvider>
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/user/addBook"
+            element={
+              <ProtectedRoutes>
+                <AddBook />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/user/books/book/:id"
+            element={
+              <BookInfoProvider>
+                <BookPage />
+              </BookInfoProvider>
+            }
+          />
+        </Routes>
+        {isAuthenticated && !loadingAuth && <Iconsbar />}
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;

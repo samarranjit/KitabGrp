@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
 
- interface User {
+ export interface User {
   name: string;
   email: string;
   _id: string;

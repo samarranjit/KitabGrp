@@ -1,13 +1,14 @@
-import { Box, Button, Input, Typography } from "@mui/material";
+import { Box, Button, Input, Typography, Tooltip } from "@mui/material";
 import FloatingAddBtn from "../../components/FloatingAddBtn";
 import BookCard from "./BookCard";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import Grid from "@mui/material/Grid";
+import { Link } from "react-router-dom";
 
 
 const Book = () => {
   const { bookInfo } = BooksContext();
-  console.log(bookInfo?.map((book) => console.log(book)));
+  // console.log(bookInfo?.map((book) => console.log(book)));
   return (
     <Box
       sx={{
@@ -44,7 +45,9 @@ const Book = () => {
               md={4} // 3 columns on large screens
               lg={3}
             >
+              <Link to={`/user/books/book/${book._id}`}>
               <BookCard key={book?._id} book={book} />
+              </Link>
             </Grid>
           ))}
       </Grid>

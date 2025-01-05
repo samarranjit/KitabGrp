@@ -102,7 +102,7 @@ const Profile = () => {
                     fullWidth
                   />
                 ) : (
-                  <Typography variant="body1">{user.name}</Typography>
+                  <Typography variant="body1">{user?.name}</Typography>
                 )}
               </Box>
               <Box>
@@ -115,7 +115,7 @@ const Profile = () => {
                     fullWidth
                   />
                 ) : (
-                  <Typography variant="body1">{user.email}</Typography>
+                  <Typography variant="body1">{user?.email}</Typography>
                 )}
               </Box>
             </Box>

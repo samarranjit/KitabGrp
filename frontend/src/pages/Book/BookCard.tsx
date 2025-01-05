@@ -21,7 +21,7 @@ const BookCard = ({book}: BookCardProps) => {
               {book?.title}
             </Typography> 
             <Typography gutterBottom variant="subtitle2" component="div">
-              ✍️:{book?.reviewerName}
+              ✍️:{book?.reviewerName?.name}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {book?.review}

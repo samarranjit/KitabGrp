@@ -1,6 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
 
+export interface Reviewer {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+  bio: string;
+  birthDate: string;
+  followers: string;
+  __v: string;
+}
 
 export interface BookInfo {
   _id:string,
@@ -10,7 +22,7 @@ export interface BookInfo {
     genre: string[];
     coverImage?: string;
     publishedDate?: string;
-    reviewerName: string;
+    reviewerName: Reviewer;
     createdAt?: string;
     updatedAt?: string;
   }

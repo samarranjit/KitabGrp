@@ -72,7 +72,7 @@ const AddBook = () => {
         `${import.meta.env.VITE_API_BASE_URL}/user/book/addBook`,
         {
           ...formData,
-          reviewerName: user.name,
+          reviewerName: user,
           createdAt: new Date(),
         }
       );

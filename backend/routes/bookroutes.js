@@ -35,4 +35,24 @@ router.get("/getBookInfo",async(req,res)=>{
     }
 })
 
+
+//route for getting the book details of the selected book
+
+router.get("/book/:id", async(req,res)=>{
+    try {
+        const id= req.params.id;
+        // console.log(id);
+        const book = await BookDetails.findById(id);
+
+        if(book){
+            // console.log(book)
+            res.status(200).send(book)
+        }
+        else{
+            res.send({message:"Could not find the Book"})
+        }
+    } catch (error) {
+        res.semd({message: "Error in server", error})
+    }
+})
 module.exports = router;
