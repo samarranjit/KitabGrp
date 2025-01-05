@@ -39,6 +39,10 @@ const bookSchema = new mongoose.Schema({
   reviewerName : {
     type: Object,
     required: true
+  },
+  likeCount:{
+    type : Number,
+    required: false
   }
 });
 

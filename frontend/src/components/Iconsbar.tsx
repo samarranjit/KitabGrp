@@ -20,11 +20,11 @@ const Iconsbar = () => {
       {/* Icon Bar */}
       <BottomNavigation
         value={value}
-        style={{ backgroundColor: "#f5f5f5", zIndex:10, position:"fixed", bottom:0, left:0, width: "100vw" }}
+        style={{ backgroundColor: "#f5f5f5", zIndex:2, position:"fixed", bottom:0, left:0, width: "100vw" }}
       >
         {/* <IconsBarContext.Provider value={{iconsbarPage}}>  */}
         
-        <NavLink to={"/user/dashboard/feed"}>
+        <NavLink to={"/user/dashboard"}>
 
         <BottomNavigationAction label="Feed" icon={<HomeIcon />}  />
         </NavLink>

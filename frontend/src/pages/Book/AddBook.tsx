@@ -65,6 +65,23 @@ const AddBook = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Word count validation
+    const reviewWordCount = formData.review.trim().split(/\s+/).length;
+    if (reviewWordCount < 25) {
+      setAlert({
+        status: "warning",
+        message: "Your review must be at least 25 words.",
+      });
+      setTimeout(() => {
+        setAlert({
+          status:"",
+          message: ""
+        })
+      }, 1200);
+      return; // Prevent form submission
+    }
+
     try {
       // Make a POST request to your backend
       // const now = new Date();
@@ -74,6 +91,7 @@ const AddBook = () => {
           ...formData,
           reviewerName: user,
           createdAt: new Date(),
+          likeCount: 0
         }
       );
 
@@ -90,6 +108,9 @@ const AddBook = () => {
           reviewerName: "",
           genre: "",
         });
+        setTimeout(() => {
+          navigate("/user/dashboard/books")
+        }, 900);
       } else {
         console.log("Failed to submit the review. Please try again.");
         setAlert({
@@ -175,6 +196,7 @@ const AddBook = () => {
             fullWidth
             multiline
             rows={4}
+            
           />
 
           <Button

@@ -36,7 +36,10 @@ function App() {
             path="/user/dashboard"
             element={
               <ProtectedRoutes>
+                <BookInfoProvider>
+
                 <Dashboard />
+                </BookInfoProvider>
               </ProtectedRoutes>
             }
           />

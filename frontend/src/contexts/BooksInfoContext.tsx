@@ -25,6 +25,7 @@ export interface BookInfo {
     reviewerName: Reviewer;
     createdAt?: string;
     updatedAt?: string;
+    likeCount : number
   }
 
   interface BooksInfoContextType {

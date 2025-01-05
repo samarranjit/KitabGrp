@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -6,6 +7,7 @@ const HomePage = () => {
       className="relative h-screen bg-cover bg-center"
       style={{
         backgroundImage: "url('/Static_Images/HomePageBgImg.avif')",
+        zIndex : 3
       }}
     >
       {/* Overlay for dark effect */}
@@ -19,13 +21,15 @@ const HomePage = () => {
         <p className="text-lg md:text-xl mb-8 max-w-2xl">
           Dive into a world of books with your personalized book club. Connect, share, and explore your next great read!
         </p>
+        <Link to={"/login"}>
         <Button
           variant= "contained"
           color="primary"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg"
-        >
+          >
           Get Started
         </Button>
+          </Link>
       </div>
     </div>
   );

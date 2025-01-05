@@ -34,7 +34,7 @@ const Book = () => {
         Start a discussion:
       </Typography>
 
-      <Grid container spacing={3} justifyContent="center" alignContent={"center"} paddingBottom="5rem">
+      <Grid container spacing={3} justifyContent="left" alignContent={"center"} paddingBottom="5rem">
         {bookInfo &&
           bookInfo.map((book) => (
             <Grid

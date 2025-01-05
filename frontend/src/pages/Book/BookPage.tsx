@@ -1,5 +1,5 @@
-import  { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import { BookInfo } from "../../contexts/BooksInfoContext";
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
@@ -50,6 +50,8 @@ const BookPage = () => {
           gap: 2,
           py: 4,
           px: { xs: 3, sm: 5, md: 25 },
+            paddingY: "5rem",
+
         }}
       >
         {/* Left Section: Cover Image and Book Details */}
@@ -60,6 +62,9 @@ const BookPage = () => {
             flexDirection: "column",
             alignItems: { xs: "center", md: "flex-start" },
             width: { xs: "100%", md: "40%" },
+            borderRight: { xs: "none", md: "1px solid black" },
+            paddingX: "5rem",
+            maxHeight : "70vh"
           }}
         >
           <img
@@ -95,9 +100,11 @@ const BookPage = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: 5,
+            gap: 2,
             justifyContent: "center",
             width: { xs: "100%", md: "60%" },
+            paddingX: {md:"5rem"},
+           
           }}
         >
           {/* Reviewer Details */}
@@ -108,9 +115,11 @@ const BookPage = () => {
               sx={{ width: 56, height: 56 }}
             />
             <Box>
-              <Typography variant="h6" fontWeight="bold">
-                {currentBook?.reviewerName?.name || "Anonymous"}
-              </Typography>
+              <Link to={"/"}>
+                <Typography variant="h6" fontWeight="bold">
+                  {currentBook?.reviewerName?.name || "Anonymous"}
+                </Typography>
+              </Link>
               <Typography variant="body2" color="text.secondary">
                 Reviewer
               </Typography>
@@ -118,16 +127,20 @@ const BookPage = () => {
           </Box>
 
           {/* Review */}
-          <Box display={"flex"} justifyContent={"space-between"} alignContent={"center"}>
-            <Typography variant="subtitle1">
-              Number of Likes:
-            </Typography>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignContent={"center"}
+          >
+            <Typography variant="subtitle1">Number of Likes: {currentBook?.likeCount}</Typography>
             <IconButton
               color="primary" // Highlight the icon if liked
             >
               <ThumbUpOffAltIcon />
             </IconButton>
           </Box>
+
+          <Typography fontWeight="bold">Review:</Typography>
           <Typography variant="body1">{currentBook?.review}</Typography>
         </Box>
       </Box>
