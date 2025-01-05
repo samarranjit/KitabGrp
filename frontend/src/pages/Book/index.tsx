@@ -44,7 +44,7 @@ const Book = () => {
               md={4} // 3 columns on large screens
               lg={3}
             >
-              <BookCard key={book?._id} Book={book} />
+              <BookCard key={book?._id} book={book} />
             </Grid>
           ))}
       </Grid>
