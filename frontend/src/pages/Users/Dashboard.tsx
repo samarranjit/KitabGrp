@@ -128,12 +128,12 @@ const Dashboard = () => {
                   mt={2}
                   mb={2}
                 >
-                  {review.length > 100
-                    ? `${review.substring(0, 100)}...`
+                  {review?.length && review?.length > 100
+                    ? `${review?.substring(0, 100)}...`
                     : review}
                 </Typography>
                 <Box display={"flex"} flexDirection={"column"} gap={3}>
-                  <Typography textAlign={"left"}>✍️ : {reviewerName.name}</Typography>
+                  <Typography textAlign={"left"}>✍️ : {reviewerName?.name}</Typography>
                   <Link to={`/user/books/book/${_id}`}>
                     <Button variant="contained" size="small">
                       View More

@@ -9,7 +9,7 @@ import {
   Alert,
 } from "@mui/material";
 
-import { useAuth } from "../../contexts/AuthContext";
+// import { useAuth } from "../../contexts/AuthContext";
 import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 import { BookInfo } from "../../contexts/BooksInfoContext";
@@ -31,7 +31,7 @@ interface Alert {
 
 
 const AddBook = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const {id} = useParams();
 
@@ -78,6 +78,7 @@ const AddBook = () => {
     event: React.SyntheticEvent,
     value: number | null
   ) => {
+    console.log(event)
     setEditingBook(prev => ({
       ...prev,
       rating : value
