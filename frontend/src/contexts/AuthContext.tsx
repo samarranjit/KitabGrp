@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
+import Loading from "../components/Loading";
 
  export interface User {
   name: string;
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   if (loadingAuth) {
-    return <div>Loading authentication...</div>; // Replace with your custom loader component
+    return <Loading /> // Replace with your custom loader component
   }
 //   console.log(user&& user)
 
