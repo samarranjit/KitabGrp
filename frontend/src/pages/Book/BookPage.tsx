@@ -2,19 +2,20 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import { BookInfo } from "../../contexts/BooksInfoContext";
-import { Avatar, Box, IconButton, Rating, Typography } from "@mui/material";
+import { Avatar, Box, Button, IconButton, Rating, Typography } from "@mui/material";
 import Loading from "../../components/Loading";
 import axiosInstance from "../../axios/axiosInstance";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import { useAuth } from "../../contexts/AuthContext";
 
 const BookPage = () => {
+  const user = useAuth();
   const { id } = useParams();
   const { bookInfo } = BooksContext();
   const [Loader, setLoader] = useState(false);
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
-
   useEffect(() => {
     setLoader(true);
     const selectBook = async () => {
@@ -62,7 +63,7 @@ const BookPage = () => {
             alignItems: { xs: "center", md: "flex-start" },
             width: { xs: "100%", md: "40%" },
             borderRight: { xs: "none", md: "1px solid black" },
-            paddingX: "5rem",
+            paddingX: "0",
             maxHeight : "70vh"
           }}
         >
@@ -140,6 +141,15 @@ const BookPage = () => {
           </Box>
 
           <Typography fontWeight="bold">Review:</Typography>
+          {
+            user?.isAuthenticated &&
+            (user?.user._id === currentBook?.reviewerName._id) &&
+            <Button
+              variant="contained"
+            >
+              Edit
+            </Button>
+          }
           {currentBook?.rating?
             <Rating
               name="rating"
@@ -147,6 +157,8 @@ const BookPage = () => {
               precision={0.5}
               readOnly
             />:""}
+
+
           <Typography variant="body1">{currentBook?.review}</Typography>
         </Box>
       </Box>
