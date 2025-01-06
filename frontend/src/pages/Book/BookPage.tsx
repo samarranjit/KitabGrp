@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import { BookInfo } from "../../contexts/BooksInfoContext";
-import { Avatar, Box, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Rating, Typography } from "@mui/material";
 import Loading from "../../components/Loading";
 import axiosInstance from "../../axios/axiosInstance";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
@@ -11,7 +11,6 @@ const BookPage = () => {
   const { id } = useParams();
   const { bookInfo } = BooksContext();
   const [Loader, setLoader] = useState(false);
-
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
@@ -141,6 +140,13 @@ const BookPage = () => {
           </Box>
 
           <Typography fontWeight="bold">Review:</Typography>
+          {currentBook?.rating?
+            <Rating
+              name="rating"
+              value={currentBook?.rating}
+              precision={0.5}
+              readOnly
+            />:""}
           <Typography variant="body1">{currentBook?.review}</Typography>
         </Box>
       </Box>

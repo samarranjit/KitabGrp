@@ -23,6 +23,7 @@ export interface BookInfo {
     coverImage?: string;
     publishedDate?: string;
     reviewerName: Reviewer;
+    rating: number;
     createdAt?: string;
     updatedAt?: string;
     likeCount : number

@@ -85,6 +85,7 @@ const AddBook = () => {
     try {
       // Make a POST request to your backend
       // const now = new Date();
+      console.log(formData)
       const response = await axiosInstance.post(
         `${import.meta.env.VITE_API_BASE_URL}/user/book/addBook`,
         {
