@@ -55,4 +55,21 @@ router.get("/book/:id", async(req,res)=>{
         res.semd({message: "Error in server", error})
     }
 })
+
+
+//editing book review
+
+router.post("/editBook", async(req,res)=>{
+    const {_id} = req.body;
+    try {
+        
+        const updatedBook = await BookDetails.findByIdAndUpdate(_id, req.body, {new:true});
+        
+        if(updatedBook) res.status(200).send({message:"Successfully Updated the Book Review"})
+        else res. status(500).send({message: "Error occured while trying to update the book review"})
+    } catch (error) {
+        res.status(500).send({message: "Server Error Occurred"})
+    }
+
+})
 module.exports = router;

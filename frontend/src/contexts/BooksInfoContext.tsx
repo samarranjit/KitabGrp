@@ -15,18 +15,18 @@ export interface Reviewer {
 }
 
 export interface BookInfo {
-  _id:string,
-    title: string;
-    author: string;
-    review: string;
-    genre: string[];
+  _id?:string,
+    title?: string;
+    author?: string;
+    review?: string;
+    genre?: string[];
     coverImage?: string;
     publishedDate?: string;
-    reviewerName: Reviewer;
-    rating: number;
+    reviewerName?: Reviewer;
+    rating?: number | null;
     createdAt?: string;
     updatedAt?: string;
-    likeCount : number
+    likeCount? : number
   }
 
   interface BooksInfoContextType {

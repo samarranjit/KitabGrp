@@ -17,6 +17,7 @@ import Book from "./pages/Book";
 import AddBook from "./pages/Book/AddBook";
 import { BookInfoProvider } from "./contexts/BooksInfoContext";
 import BookPage from "./pages/Book/BookPage";
+import EditBook from "./pages/Book/EditBook";
 
 function App() {
   const { isAuthenticated, loadingAuth } = useAuth();
@@ -66,6 +67,14 @@ function App() {
             element={
               <ProtectedRoutes>
                 <AddBook />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/user/books/edit/:id"
+            element={
+              <ProtectedRoutes>
+                <EditBook />
               </ProtectedRoutes>
             }
           />

@@ -87,7 +87,7 @@ const BookPage = () => {
               Author: {currentBook?.author}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Genres: {currentBook?.genre.join(", ")}
+              Genres: {currentBook?.genre?.join(", ")}
             </Typography>
             {/* <Typography variant="body2" color="text.secondary">
             Published: {new Date(currentBook?.createdAt).toLocaleDateString()}
@@ -111,7 +111,7 @@ const BookPage = () => {
           <Box display="flex" alignItems="center" gap={2}>
             <Avatar
               src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
-              alt={currentBook?.reviewerName.name || "Anonymous"}
+              alt={currentBook?.reviewerName?.name || "Anonymous"}
               sx={{ width: 56, height: 56 }}
             />
             <Box>
@@ -143,11 +143,14 @@ const BookPage = () => {
           <Typography fontWeight="bold">Review:</Typography>
           {
             user?.isAuthenticated &&
-            (user?.user._id === currentBook?.reviewerName._id) &&
+            (user?.user._id === currentBook?.reviewerName?._id) &&
+
             <Button
               variant="contained"
-            >
+              >
+            <Link to={`/user/books/edit/${currentBook._id}`} style={{width:'100%'}}>
               Edit
+              </Link>
             </Button>
           }
           {currentBook?.rating?

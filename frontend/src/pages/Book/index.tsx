@@ -24,14 +24,14 @@ const Book = () => {
       <FloatingAddBtn />
 
       <Input
-        placeholder="Search Discussion"
+        placeholder="Search For Reviews"
         sx={{ width: "50%", maxWidth: 400 }} // Responsive width
         fullWidth
       />
       <Button variant="contained">Search</Button>
 
       <Typography variant="h5" textAlign="left">
-        Start a discussion:
+        Explore Reviews:
       </Typography>
 
       <Grid container spacing={3} justifyContent="left" alignContent={"center"} paddingBottom="5rem">
