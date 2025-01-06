@@ -31,6 +31,13 @@ const Navbar = () => {
     }
   };
 
+  const handleScrollToFeatures = () => {
+    const featuresSection = document.getElementById("features");
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <AppBar position="static" className="bg-blue-700 text-white shadow-lg">
       <Toolbar className="flex justify-between">
@@ -62,11 +69,13 @@ const Navbar = () => {
             </Button>
           </Link>
 
-          <Link to={"/features"}>
-            <Button color="inherit" className="hover:text-gray-200">
-              Features
-            </Button>
-          </Link>
+          <Button
+            color="inherit"
+            className="hover:text-gray-200"
+            onClick={handleScrollToFeatures}
+          >
+            Features
+          </Button>
 
           <Link to={"/contact"}>
             <Button color="inherit" className="hover:text-gray-200">

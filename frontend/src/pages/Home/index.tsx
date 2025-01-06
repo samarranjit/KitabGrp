@@ -1,4 +1,6 @@
  
+import Footer from "../../components/Footer";
+import CallForSignIn from "./CallForSignIn";
 import HomePage from "./HomePage";
 import OurFeatures from "./OurFeatures";
 
@@ -8,11 +10,9 @@ const Home = () => {
     <>
       <HomePage />
       <OurFeatures />
-      {/* {isAuthenticated && 
-      isAuthenticated?
-        <Iconsbar />:""
-      } */}
+      <CallForSignIn />
 
+      <Footer/>
     </>  
   );
 };
