@@ -26,7 +26,7 @@ export interface BookInfo {
     rating?: number | null;
     createdAt?: string;
     updatedAt?: string;
-    likeCount? : number
+    likeCount? : string[] 
   }
 
   interface BooksInfoContextType {

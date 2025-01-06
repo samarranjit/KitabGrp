@@ -45,7 +45,7 @@ const bookSchema = new mongoose.Schema({
     required: true
   },
   likeCount:{
-    type : Number,
+    type : [String],
     required: false
   }
 });

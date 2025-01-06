@@ -92,7 +92,7 @@ const AddBook = () => {
           ...formData,
           reviewerName: user,
           createdAt: new Date(),
-          likeCount: 0
+          likeCount: []
         }
       );
 

@@ -2,20 +2,79 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import { BookInfo } from "../../contexts/BooksInfoContext";
-import { Avatar, Box, Button, IconButton, Rating, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  Rating,
+  Typography,
+} from "@mui/material";
 import Loading from "../../components/Loading";
 import axiosInstance from "../../axios/axiosInstance";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useAuth } from "../../contexts/AuthContext";
+import ThumbUpOffAltTwoToneIcon from "@mui/icons-material/ThumbUpOffAltTwoTone";
 
 const BookPage = () => {
   const user = useAuth();
+
+  const [likedStatus, setLikedStatus] = useState<Boolean>(false);
+
+  // console.log(user && user.user._id )
   const { id } = useParams();
   const { bookInfo } = BooksContext();
   const [Loader, setLoader] = useState(false);
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
+
+  const handleLikeAction = async () => {
+    const response = await axiosInstance.post(
+      `${import.meta.env.VITE_API_BASE_URL}/user/book/handleLikeAction`,
+      {
+        bookId: currentBook?._id,
+        userId: user.user._id,
+      }
+    );
+
+    if (response.status === 200 && response.data.like === 1) {
+      console.log("Sucess: ", response.data.message);
+      setLikedStatus(true);
+
+      setCurrentBook((prev) => {
+        if (!prev) return prev; // Safeguard for undefined `prev`
+        else {
+          const updatedLikeCount = [...(prev.likeCount ?? []), user.user._id];
+
+          return {
+            ...prev,
+            likeCount: updatedLikeCount,
+          };
+        }
+      });
+    } else if (response.status === 200 && response.data.like === -1) {
+      console.log("Success: ", response.data.message);
+      setLikedStatus(false);
+
+      setCurrentBook((prev) => {
+        if (!prev) return prev; // Safeguard for undefined `prev`
+
+        // Filter out the user's ID from the likeCount array
+        const updatedLikeCount = (prev.likeCount ?? []).filter(
+          (id) => id !== user.user._id
+        );
+
+        return {
+          ...prev,
+          likeCount: updatedLikeCount,
+        };
+      });
+    } else {
+      console.log("Failure: ", response.data.message);
+    }
+  };
+
   useEffect(() => {
     setLoader(true);
     const selectBook = async () => {
@@ -34,9 +93,18 @@ const BookPage = () => {
     selectBook();
     setLoader(false);
     // console.log(currentBook);
+
+    const checkIfAlreadyLiked = () => {
+      const likedStatus = currentBook?.likeCount?.includes(
+        `${user && user.user._id}`
+      );
+      // console.log(likedStatus)
+      setLikedStatus(likedStatus ? true : false);
+    };
+    checkIfAlreadyLiked();
   }, [bookInfo]);
 
-  // console.log(id);
+  // console.log(currentBook?.likeCount?.length);
 
   if (Loader === true) {
     return <Loading />;
@@ -50,8 +118,7 @@ const BookPage = () => {
           gap: 2,
           py: 4,
           px: { xs: 3, sm: 5, md: 25 },
-            paddingY: "5rem",
-
+          paddingY: "5rem",
         }}
       >
         {/* Left Section: Cover Image and Book Details */}
@@ -64,7 +131,7 @@ const BookPage = () => {
             width: { xs: "100%", md: "40%" },
             borderRight: { xs: "none", md: "1px solid black" },
             paddingX: "0",
-            maxHeight : "70vh"
+            maxHeight: "70vh",
           }}
         >
           <img
@@ -103,8 +170,7 @@ const BookPage = () => {
             gap: 2,
             justifyContent: "center",
             width: { xs: "100%", md: "60%" },
-            paddingX: {md:"5rem"},
-           
+            paddingX: { md: "5rem" },
           }}
         >
           {/* Reviewer Details */}
@@ -132,35 +198,53 @@ const BookPage = () => {
             justifyContent={"space-between"}
             alignContent={"center"}
           >
-            <Typography variant="subtitle1">Number of Likes: {currentBook?.likeCount}</Typography>
-            <IconButton
-              color="primary" // Highlight the icon if liked
-            >
-              <ThumbUpOffAltIcon />
-            </IconButton>
+            <Typography variant="subtitle1">
+              Number of Likes: {currentBook?.likeCount?.length}
+            </Typography>
+
+            {user?.isAuthenticated &&
+              (likedStatus ? (
+                <>
+                  <IconButton
+                    color="secondary"
+                    // Highlight the icon if liked
+                    onClick={handleLikeAction}
+                  >
+                    <ThumbUpOffAltTwoToneIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <IconButton
+                  color="primary" // Highlight the icon if liked
+                  onClick={handleLikeAction}
+                >
+                  <ThumbUpOffAltIcon />
+                </IconButton>
+              ))}
           </Box>
 
           <Typography fontWeight="bold">Review:</Typography>
-          {
-            user?.isAuthenticated &&
-            (user?.user._id === currentBook?.reviewerName?._id) &&
-
-            <Button
-              variant="contained"
-              >
-            <Link to={`/user/books/edit/${currentBook._id}`} style={{width:'100%'}}>
-              Edit
-              </Link>
-            </Button>
-          }
-          {currentBook?.rating?
+          {user?.isAuthenticated &&
+            user?.user._id === currentBook?.reviewerName?._id && (
+              <Button variant="contained">
+                <Link
+                  to={`/user/books/edit/${currentBook._id}`}
+                  style={{ width: "100%" }}
+                >
+                  Edit
+                </Link>
+              </Button>
+            )}
+          {currentBook?.rating ? (
             <Rating
               name="rating"
               value={currentBook?.rating}
               precision={0.5}
               readOnly
-            />:""}
-
+            />
+          ) : (
+            ""
+          )}
 
           <Typography variant="body1">{currentBook?.review}</Typography>
         </Box>

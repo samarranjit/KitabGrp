@@ -15,14 +15,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BookInfo } from "../../contexts/BooksInfoContext";
 
 
-// interface ReviewForm {
-//   title: string;
-//   author: string;
-//   rating: number | null;
-//   review: string;
-//   reviewerName: string;
-//   genre: string;
-// }
 
 interface Alert {
   status: string;
@@ -58,7 +50,6 @@ const AddBook = () => {
 
     selectBook();
     // setLoader(false);
-    // console.log(currentBook);
   }, []);
   
 
@@ -197,10 +188,10 @@ const AddBook = () => {
             <Typography>Rating:</Typography>
             <Rating
               name="rating"
-              value={editingBook?.rating}
+              value={editingBook && editingBook?.rating}
               onChange={handleRatingChange}
               precision={0.5}
-              defaultValue={1}
+              // defaultValue={1}
             />
           </Box>
           <TextField
