@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import { BookInfo } from "../../contexts/BooksInfoContext";
@@ -11,19 +11,27 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+
 import Loading from "../../components/Loading";
 import axiosInstance from "../../axios/axiosInstance";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useAuth } from "../../contexts/AuthContext";
 import ThumbUpOffAltTwoToneIcon from "@mui/icons-material/ThumbUpOffAltTwoTone";
-import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
-import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
+import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
+// import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const BookPage = () => {
   const user = useAuth();
 
   const [likedStatus, setLikedStatus] = useState<Boolean>(false);
   const [followedStatus, setFollowedStatus] = useState<Boolean>(false);
+  const [open, setOpen] = React.useState(false);
+  const [snackText, setSnackText]  = React.useState('');
+
 
   // console.log("User: ",user && user.user)
 
@@ -46,6 +54,16 @@ const BookPage = () => {
 
     if (response.status === 200 && response.data.like === 1) {
       console.log("Sucess: ", response.data.message);
+
+      setSnackText(response.data.message)
+      setOpen(true)
+      setTimeout(() => {
+        
+        setOpen(false);
+        setSnackText('');
+      }, 1200);
+
+
       setLikedStatus(true);
 
       setCurrentBook((prev) => {
@@ -61,6 +79,17 @@ const BookPage = () => {
       });
     } else if (response.status === 200 && response.data.like === -1) {
       console.log("Success: ", response.data.message);
+
+      
+      setSnackText(response.data.message)
+      setOpen(true)
+      setTimeout(() => {
+        
+        setSnackText('');
+        setOpen(false);
+      }, 1200);
+
+
       setLikedStatus(false);
 
       setCurrentBook((prev) => {
@@ -81,28 +110,80 @@ const BookPage = () => {
     }
   };
 
-  const handleFollowBtn = async ()=>{
+  const handleFollowBtn = async () => {
     try {
-      console.log("inside follow bt")
-      const response = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/user/book/handleFollowBtn`,{
-        followingId: currentBook?.ReviewerName?._id,
-        followerId: user?.user?._id
-      })
-
-      if(response && response.status === 200){
-        console.log(response.data.message)
-        if(response.data.follow === 1){
-          setFollowedStatus(true)
+      console.log("inside follow bt");
+      const response = await axiosInstance.post(
+        `${import.meta.env.VITE_API_BASE_URL}/user/book/handleFollowBtn`,
+        {
+          followingId: currentBook?.ReviewerName?._id,
+          followerId: user?.user?._id,
         }
-        else if(response.data.follow === -1){
+      );
+
+      if (response && response.status === 200) {
+        console.log(response.data.message);
+        if (response.data.follow === 1) {
+
+          setSnackText(response.data.message)
+          setOpen(true)
+          setTimeout(() => {
+            
+            setSnackText('');
+            setOpen(false);
+          }, 1200);
+
+          setFollowedStatus(true);
+          
+        } else if (response.data.follow === -1) {
+
+          setSnackText(response.data.message)
+          setOpen(true)
+          setTimeout(() => {
+            
+            setSnackText('');
+            setOpen(false);
+          }, 1200);
+
+
           setFollowedStatus(false);
         }
       }
-      
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    console.log(event)
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+
+
 
   useEffect(() => {
     setLoader(true);
@@ -131,18 +212,16 @@ const BookPage = () => {
       setLikedStatus(likedStatus ? true : false);
     };
     checkIfAlreadyLiked();
-    const checkIfAlreadyFollowed = ()=>{
-      const followedStatus =currentBook?.ReviewerName?.followers?.includes(
+    const checkIfAlreadyFollowed = () => {
+      const followedStatus = currentBook?.ReviewerName?.followers?.includes(
         // `${user?.user?._id}`
         `${user && user.user._id}`
-        );
-      setFollowedStatus(followedStatus?true:false)
+      );
+      setFollowedStatus(followedStatus ? true : false);
       // console.log(currentBook?.ReviewerName?.name);
-    }
+    };
     checkIfAlreadyFollowed();
   }, [bookInfo]);
-
-
 
   // console.log(currentBook?.likeCount?.length);
 
@@ -161,6 +240,13 @@ const BookPage = () => {
           paddingY: "5rem",
         }}
       >
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message= {`${snackText}`}
+          action={action}
+        />
         {/* Left Section: Cover Image and Book Details */}
 
         <Box
@@ -258,17 +344,15 @@ const BookPage = () => {
                     }}
                     onClick={handleFollowBtn}
                   >
-                    {followedStatus?
-                     <PersonAddAlt1RoundedIcon
-                     sx={{
-                       borderRadius: "50%"
-                     }}
-                   />
-                   :
-                   <PersonAddAlt1OutlinedIcon />
-                    
-                  }
-                   
+                    {followedStatus ? (
+                      <HowToRegIcon
+                        sx={{
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ) : (
+                      <PersonAddAlt1OutlinedIcon />
+                    )}
                   </Button>
                 </Box>
               </Grid>

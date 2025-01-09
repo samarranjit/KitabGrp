@@ -130,24 +130,24 @@ router.post("/handleLikeAction", async (req, res) => {
 
 
 
-
 //handling following 
 
 router.post('/handleFollowBtn', async (req, res) => {
-  // console.log(req.body)
+  console.log(req.body)
 
   const reviewer = await userModels.findById(req.body.followingId);
   // const follower = await userModels.findById(req.body.followerId);
 
 
 
-  if (reviewer.followers.includes(req.body.followingId)) {
+  if (reviewer.followers.includes(req.body.followerId)) {
+    console.log("removing follower")
     const newReviewer = await userModels.findByIdAndUpdate(
       req.body.followingId,
       { $pull: { followers: req.body.followerId } },
       { new: true }
     );
-    console.log(newReviewer)
+    // console.log(newReviewer)
 
     if (newReviewer) {
       res.status(200).send({ follow: -1, message: "You unfollowed this reviewer" });
@@ -156,6 +156,7 @@ router.post('/handleFollowBtn', async (req, res) => {
     }
   }
   else {
+    console.log("Adding Follower")
     // const newReviewer= reviewer.followers.push(req.body.followerId);
 
     const newReviewer = await userModels.findByIdAndUpdate(
