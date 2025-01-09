@@ -9,17 +9,23 @@ import {
   IconButton,
   Rating,
   Typography,
+  Grid,
 } from "@mui/material";
 import Loading from "../../components/Loading";
 import axiosInstance from "../../axios/axiosInstance";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useAuth } from "../../contexts/AuthContext";
 import ThumbUpOffAltTwoToneIcon from "@mui/icons-material/ThumbUpOffAltTwoTone";
+import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
+import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 
 const BookPage = () => {
   const user = useAuth();
 
   const [likedStatus, setLikedStatus] = useState<Boolean>(false);
+  const [followedStatus, setFollowedStatus] = useState<Boolean>(false);
+
+  // console.log("User: ",user && user.user)
 
   // console.log(user && user.user._id )
   const { id } = useParams();
@@ -75,6 +81,29 @@ const BookPage = () => {
     }
   };
 
+  const handleFollowBtn = async ()=>{
+    try {
+      console.log("inside follow bt")
+      const response = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/user/book/handleFollowBtn`,{
+        followingId: currentBook?.ReviewerName?._id,
+        followerId: user?.user?._id
+      })
+
+      if(response && response.status === 200){
+        console.log(response.data.message)
+        if(response.data.follow === 1){
+          setFollowedStatus(true)
+        }
+        else if(response.data.follow === -1){
+          setFollowedStatus(false);
+        }
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     setLoader(true);
     const selectBook = async () => {
@@ -102,7 +131,18 @@ const BookPage = () => {
       setLikedStatus(likedStatus ? true : false);
     };
     checkIfAlreadyLiked();
+    const checkIfAlreadyFollowed = ()=>{
+      const followedStatus =currentBook?.ReviewerName?.followers?.includes(
+        // `${user?.user?._id}`
+        `${user && user.user._id}`
+        );
+      setFollowedStatus(followedStatus?true:false)
+      // console.log(currentBook?.ReviewerName?.name);
+    }
+    checkIfAlreadyFollowed();
   }, [bookInfo]);
+
+
 
   // console.log(currentBook?.likeCount?.length);
 
@@ -156,6 +196,12 @@ const BookPage = () => {
             <Typography variant="body2" color="text.secondary">
               Genres: {currentBook?.genre?.join(", ")}
             </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Published Date: {currentBook?.createdAt}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Last Edited Date: {currentBook?.updatedAt}
+            </Typography>
             {/* <Typography variant="body2" color="text.secondary">
             Published: {new Date(currentBook?.createdAt).toLocaleDateString()}
           </Typography> */}
@@ -177,19 +223,56 @@ const BookPage = () => {
           <Box display="flex" alignItems="center" gap={2}>
             <Avatar
               src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
-              alt={currentBook?.reviewerName?.name || "Anonymous"}
+              alt={currentBook?.ReviewerName?.name || "Anonymous"}
               sx={{ width: 56, height: 56 }}
             />
-            <Box>
-              <Link to={"/"}>
-                <Typography variant="h6" fontWeight="bold">
-                  {currentBook?.reviewerName?.name || "Anonymous"}
-                </Typography>
-              </Link>
-              <Typography variant="body2" color="text.secondary">
-                Reviewer
-              </Typography>
-            </Box>
+            <Grid container spacing={3}>
+              <Grid item md={8}>
+                <Box>
+                  <Link to={"/"}>
+                    <Typography variant="h6" fontWeight="bold">
+                      {currentBook?.ReviewerName?.name || "Anonymous"}
+                    </Typography>
+                  </Link>
+                  <Typography variant="body2" color="text.secondary">
+                    Reviewer
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid
+                item
+                md={4}
+                alignContent={"center"}
+                alignItems={"right"}
+                textAlign={"center"}
+              >
+                <Box>
+                  <Button
+                    sx={{
+                      padding: "4.5px",
+                      borderRadius: "50%",
+                      cursor: "pointer",
+                      width: "35px",
+                      height: "35px",
+                    }}
+                    onClick={handleFollowBtn}
+                  >
+                    {followedStatus?
+                     <PersonAddAlt1RoundedIcon
+                     sx={{
+                       borderRadius: "50%"
+                     }}
+                   />
+                   :
+                   <PersonAddAlt1OutlinedIcon />
+                    
+                  }
+                   
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
 
           {/* Review */}
@@ -225,7 +308,7 @@ const BookPage = () => {
 
           <Typography fontWeight="bold">Review:</Typography>
           {user?.isAuthenticated &&
-            user?.user._id === currentBook?.reviewerName?._id && (
+            user?.user._id === currentBook?.ReviewerName?._id && (
               <Button variant="contained">
                 <Link
                   to={`/user/books/edit/${currentBook._id}`}

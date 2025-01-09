@@ -15,7 +15,6 @@ import axiosInstance from "../../axios/axiosInstance";
 
 const Profile = () => {
   const { user, setUser } = useAuth(); // Access user object from context
-  // console.log(user&& user)
   const [editingProfile, setEditingProfile] = useState(false);
   const [editingUser, setEditingUser] = useState({
     _id: user?._id || "",
@@ -24,7 +23,8 @@ const Profile = () => {
     bio: user?.bio || "",
     birthDate: user?.birthDate || "",
     genre: user?.genre || "",
-    followers: user?.followers || ""
+    followers: user?.followers ||[ ""],
+    profilePic : user?.profilePic || ""
   });
 
   const imageUrl =
@@ -51,6 +51,7 @@ const Profile = () => {
       bio: editingUser?.bio || user.bio,
       birthDate: editingUser?.birthDate || user.birthDate,
       genre: editingUser?.genre || user.genre,
+      profilePic: editingUser?.profilePic || user.profilePic
     })
 
     if(response.status === 200){
@@ -88,7 +89,21 @@ const Profile = () => {
             border: "2px solid #005B96",
           }}
         />
+        {
+          editingProfile?
+          <>
+          <Input type="file"></Input>
+          </>
+          :
+        <Typography variant="subtitle1" fontWeight="bold">
+          {user?.followers.length} Followers
+        </Typography>
+        }
 
+
+        
+
+        <>
         <Card sx={{ width: "100%", marginTop: 2 }}>
           <CardContent>
             <Box display="flex" flexDirection="column" gap={2}>
@@ -118,6 +133,34 @@ const Profile = () => {
                   <Typography variant="body1">{user?.email}</Typography>
                 )}
               </Box>
+              <Box>
+                <Typography variant="h6">Date of Birth:</Typography>
+                {editingProfile ? (
+                  <Input
+                    value={editingUser.birthDate}
+                    name="birthDate"
+                    onChange={handleEdit}
+                    fullWidth
+                  />
+                ) : (
+                  <Typography variant="body1">{user?.birthDate}</Typography>
+                )}
+              </Box>
+              
+              <Box>
+                <Typography variant="h6">Bio:</Typography>
+                {editingProfile ? (
+                  <Input
+                    value={editingUser.bio}
+                    name="bio"
+                    onChange={handleEdit}
+                    fullWidth
+                  />
+                ) : (
+                  <Typography variant="body1">{user?.bio}</Typography>
+                )}
+              </Box>
+              
             </Box>
           </CardContent>
         </Card>
@@ -153,6 +196,8 @@ const Profile = () => {
             </Button>
           )}
         </CardActions>
+        </>
+
       </Paper>
     </div>
   );

@@ -10,7 +10,7 @@ export interface Reviewer {
   updatedAt: string;
   bio: string;
   birthDate: string;
-  followers: string;
+  followers: string[];
   __v: string;
 }
 
@@ -22,11 +22,12 @@ export interface BookInfo {
     genre?: string[];
     coverImage?: string;
     publishedDate?: string;
-    reviewerName?: Reviewer;
+    ReviewerName: Reviewer;
     rating?: number | null;
     createdAt?: string;
     updatedAt?: string;
-    likeCount? : string[] 
+    likeCount? : string[] ;
+    reviwerId?: string
   }
 
   interface BooksInfoContextType {

@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
         const { email, password } = req.body;
     
         const existingUser = await userModels.findOne({ email: email });
-        console.log(existingUser);
+        // console.log(existingUser);
     
         const passwordMatch = await bcrypt.compare(password, existingUser.password);
     

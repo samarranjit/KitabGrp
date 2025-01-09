@@ -14,24 +14,44 @@ import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 import { BookInfo } from "../../contexts/BooksInfoContext";
 
-
-
 interface Alert {
   status: string;
   message: string;
 }
 
-
 const AddBook = () => {
   // const { user } = useAuth();
 
-  const {id} = useParams();
+  const { id } = useParams();
 
-  const navigate= useNavigate()
+  const navigate = useNavigate();
 
   const [alert, setAlert] = useState<Alert | null>(null);
 
-  const [editingBook, setEditingBook] = useState<BookInfo | undefined>(undefined);
+  const defaultEditingBook = {
+    _id: "",
+    title: "",
+    author: "",
+    genre: [],
+    review: "",
+    rating: 0,
+    ReviewerName: {
+      _id: "",
+      name: "",
+      email: "",
+      password: "",
+      createdAt: "",
+      updatedAt: "",
+      bio: "",
+      birthDate: "",
+      followers: [],
+      __v: "",
+    },
+    reviwerId: "",
+    coverImage: "",
+    updatedAt: new Date().toISOString(),
+  }
+  const [editingBook, setEditingBook] = useState<BookInfo>(defaultEditingBook);
 
   useEffect(() => {
     // setLoader(true);
@@ -51,8 +71,6 @@ const AddBook = () => {
     selectBook();
     // setLoader(false);
   }, []);
-  
-
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,20 +80,19 @@ const AddBook = () => {
       ...prev, // spread existing state
       [name]: value, // update specific field
     }));
-    console.log(editingBook)
+    console.log(editingBook);
   };
 
   const handleRatingChange = (
     event: React.SyntheticEvent,
     value: number | null
   ) => {
-    console.log(event)
-    setEditingBook(prev => ({
+    console.log(event);
+    setEditingBook((prev) => ({
       ...prev,
-      rating : value
+      rating: value,
     }));
-    console.log(editingBook)
-    
+    console.log(editingBook);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,9 +107,9 @@ const AddBook = () => {
       });
       setTimeout(() => {
         setAlert({
-          status:"",
-          message: ""
-        })
+          status: "",
+          message: "",
+        });
       }, 1200);
       return; // Prevent form submission
     }
@@ -114,9 +131,9 @@ const AddBook = () => {
           status: "success",
           message: response.data.message,
         });
-        setEditingBook(undefined);
+        setEditingBook(defaultEditingBook);
         setTimeout(() => {
-          navigate(`/user/books/book/${id}`)
+          navigate(`/user/books/book/${id}`);
         }, 900);
       } else {
         console.log("Failed to submit the edit. Please try again.");
@@ -129,9 +146,10 @@ const AddBook = () => {
       console.error("Error submitting edit for review:", error);
       console.log("An error occurred. Please try again later.");
       setAlert({
-        status : "warning",
-        message : "Some error occured while submitted data of the review. Please try again later"
-      })
+        status: "warning",
+        message:
+          "Some error occured while submitted data of the review. Please try again later",
+      });
     }
   };
 
@@ -142,14 +160,12 @@ const AddBook = () => {
           Add a Book Review
         </Typography>
 
-        {alert?.status === "success" &&
-            
-            <Alert severity="success">{alert?.message}</Alert>
-        }
-        {alert?.status === "warning" &&
-            
-            <Alert severity="warning">{alert?.message}</Alert>
-        }
+        {alert?.status === "success" && (
+          <Alert severity="success">{alert?.message}</Alert>
+        )}
+        {alert?.status === "warning" && (
+          <Alert severity="warning">{alert?.message}</Alert>
+        )}
 
         <Box
           component="form"
@@ -203,7 +219,6 @@ const AddBook = () => {
             fullWidth
             multiline
             rows={4}
-            
           />
 
           <Button
@@ -215,7 +230,9 @@ const AddBook = () => {
             Submit Review
           </Button>
           <Button
-            onClick={()=>{navigate(`/user/books/book/${id}`)}}
+            onClick={() => {
+              navigate(`/user/books/book/${id}`);
+            }}
             variant="text"
             color="primary"
             sx={{ alignSelf: "center", mt: 2 }}

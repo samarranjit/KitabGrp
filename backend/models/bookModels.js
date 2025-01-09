@@ -40,8 +40,8 @@ const bookSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  reviewerName : {
-    type: Object,
+  reviwerId : {
+    type: String,
     required: true
   },
   likeCount:{

@@ -6,10 +6,12 @@ import Loading from "../components/Loading";
   name: string;
   email: string;
   _id: string;
-  followers: string;
+  followers: string[];
   bio: string;
   birthDate: string;
-  genre:string
+  genre:string;
+  profilePic:string;
+
 }
 
 interface AuthContext {
@@ -29,10 +31,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     name: "",
     email: "",
     _id: "",
-    followers: "",
+    followers: [""],
     bio: "",
     birthDate: "",
-    genre:""
+    genre:"",
+    profilePic:""
   });
 
   useEffect(() => {

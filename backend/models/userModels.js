@@ -22,10 +22,13 @@ const userSchema = new mongoose.Schema(
             type : String
         },
         followers :{
-            type : String
+            type : [String]
         },
         genre:{
             type: String
+        },
+        profilePic:{
+            type:String
         }
 
 

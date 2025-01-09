@@ -15,7 +15,7 @@ interface ReviewForm {
   author: string;
   rating: number | null;
   review: string;
-  reviewerName: string;
+  reviewerId: string;
   genre: string;
 }
 
@@ -40,7 +40,7 @@ const AddBook = () => {
     author: "",
     rating: 1,
     review: "",
-    reviewerName: "",
+    reviewerId: "",
     genre: "",
   });
 
@@ -90,7 +90,7 @@ const AddBook = () => {
         `${import.meta.env.VITE_API_BASE_URL}/user/book/addBook`,
         {
           ...formData,
-          reviewerName: user,
+          reviwerId: user?._id,
           createdAt: new Date(),
           likeCount: []
         }
@@ -106,7 +106,7 @@ const AddBook = () => {
           author: "",
           rating: null,
           review: "",
-          reviewerName: "",
+          reviewerId: "",
           genre: "",
         });
         setTimeout(() => {

@@ -14,7 +14,7 @@ const Navbar = () => {
     try {
       if (isAuthenticated) {
         const response = await axiosInstance.get(
-          `${import.meta.env.VITE_API_BASE_URL}/user/logout`
+        `${import.meta.env.VITE_API_BASE_URL}/user/logout`
         );
         console.log("trying to log out");
         if (response.status === 200) {
