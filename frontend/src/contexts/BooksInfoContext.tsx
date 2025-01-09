@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { Suspense, createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
+import Loading from "../components/Loading";
 
 export interface Reviewer {
   _id: string;
@@ -39,9 +40,8 @@ const BooksInfoContext = createContext<BooksInfoContextType | null >(null);
 
 
 export const BookInfoProvider = ({children} : { children: React.ReactNode })=>{
-
     const [bookInfo, setBookInfo] = useState<BookInfo[] | null>(null);
-
+    // const [LoadingBooks, setLoadingBooks] = useState<Boolean>(false)
     useEffect(() => {
       const getBookInfo = async()=>{
         const response = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/user/book/getBookInfo`);
@@ -61,7 +61,9 @@ export const BookInfoProvider = ({children} : { children: React.ReactNode })=>{
 
     return(
         <BooksInfoContext.Provider value={{bookInfo, setBookInfo}}>
+          <Suspense fallback={<Loading/>}>
             {children}
+          </Suspense>
         </BooksInfoContext.Provider>
     )
 }
