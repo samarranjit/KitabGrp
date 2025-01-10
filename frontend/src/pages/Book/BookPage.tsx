@@ -246,6 +246,9 @@ const BookPage = () => {
           onClose={handleClose}
           message= {`${snackText}`}
           action={action}
+          sx={{
+            backgroundColor:"white"
+          }}
         />
         {/* Left Section: Cover Image and Book Details */}
 
@@ -315,7 +318,7 @@ const BookPage = () => {
             <Grid container spacing={3}>
               <Grid item md={8}>
                 <Box>
-                  <Link to={"/"}>
+                  <Link to={`/user/profile/${user?.user?._id}`}>
                     <Typography variant="h6" fontWeight="bold">
                       {currentBook?.ReviewerName?.name || "Anonymous"}
                     </Typography>
@@ -333,6 +336,11 @@ const BookPage = () => {
                 alignItems={"right"}
                 textAlign={"center"}
               >
+
+                {
+                  (user?.user?._id === currentBook?.ReviewerName?._id) ?
+                   null:
+
                 <Box>
                   <Button
                     sx={{
@@ -355,6 +363,7 @@ const BookPage = () => {
                     )}
                   </Button>
                 </Box>
+                }
               </Grid>
             </Grid>
           </Box>

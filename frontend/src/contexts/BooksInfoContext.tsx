@@ -45,6 +45,7 @@ export const BookInfoProvider = ({children} : { children: React.ReactNode })=>{
     useEffect(() => {
       const getBookInfo = async()=>{
         const response = await axiosInstance.get(`${import.meta.env.VITE_API_BASE_URL}/user/book/getBookInfo`);
+        // console.log("response of data", response.data)
 
         if(response.status === 200){
             setBookInfo(response.data);
