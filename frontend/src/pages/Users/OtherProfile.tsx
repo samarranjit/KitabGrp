@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { Avatar, Box, Card,  CardContent,  DialogTitle,  Paper, Typography } from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import DialogeBox from "../../components/DialogeBox";
+import { Avatar, Box, Card,  CardContent,   Paper, Typography } from "@mui/material";
 
 
 interface OtherUserDetails {
