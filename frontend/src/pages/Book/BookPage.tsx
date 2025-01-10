@@ -318,7 +318,7 @@ const BookPage = () => {
             <Grid container spacing={3}>
               <Grid item md={8}>
                 <Box>
-                  <Link to={`/user/profile/${user?.user?._id}`}>
+                  <Link to={`/user/profile/${currentBook?.ReviewerName?._id}`}>
                     <Typography variant="h6" fontWeight="bold">
                       {currentBook?.ReviewerName?.name || "Anonymous"}
                     </Typography>

@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const Book = () => {
   const { bookInfo } = BooksContext();
-  console.log(bookInfo)
+  // console.log(bookInfo)
   // console.log(bookInfo?.map((book) => console.log(book)));
   const [searchTerm, setSearchTerm] = useState(""); // State to store the search term
   const [filteredBooks, setFilteredBooks] = useState(bookInfo || []); // State to store filtered books

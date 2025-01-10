@@ -18,6 +18,7 @@ import AddBook from "./pages/Book/AddBook";
 import { BookInfoProvider } from "./contexts/BooksInfoContext";
 import BookPage from "./pages/Book/BookPage";
 import EditBook from "./pages/Book/EditBook";
+import OtherProfile from "./pages/Users/OtherProfile";
 
 function App() {
   const { isAuthenticated, loadingAuth } = useAuth();
@@ -83,6 +84,14 @@ function App() {
             element={
               <BookInfoProvider>
                 <BookPage />
+              </BookInfoProvider>
+            }
+          />
+          <Route
+            path="/user/profile/:id"
+            element={
+              <BookInfoProvider>
+                <OtherProfile />
               </BookInfoProvider>
             }
           />

@@ -145,4 +145,23 @@ router.post("/profile/edit", async (req, res) => {
     }
   });
 
+
+  // accessing user data:
+
+  router.get('/profile/:id', async(req, res)=>{
+    try {
+      
+      const userId = req.params.id;
+      // console.log(userId)
+  
+      const user = await userModels.findById(userId)
+
+      if(user) res.status(200).send(user)
+  
+      // console.log(userId)
+    } catch (error) {
+      
+    }
+
+  })
 module.exports = router;

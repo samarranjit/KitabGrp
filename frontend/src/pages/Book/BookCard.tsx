@@ -15,7 +15,7 @@ interface BookCardProps {
 }
 
 const BookCard = ({ book }: BookCardProps) => {
-  console.log(book)
+  // console.log(book)
   return (
     <Box
       className=""

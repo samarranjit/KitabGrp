@@ -2,6 +2,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
 import Loading from "../components/Loading";
 
+
+interface OtherUserDetails {
+  bio: string;
+  birthDate: string;
+  createdAt: string;
+  email: string;
+  followers: string[];
+  name: string;
+  password: string;
+  updatedAt: string;
+  _id: string;
+}
+
  export interface User {
   name: string;
   email: string;
@@ -20,6 +33,7 @@ interface AuthContext {
   loadingAuth: boolean;
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
+  selectUser : (id: string)=>object
 }
 
 const AuthContext = createContext<AuthContext | null>(null);
@@ -69,11 +83,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (loadingAuth) {
     return <Loading /> // Replace with your custom loader component
   }
-//   console.log(user&& user)
+
+  const selectUser = async (id: string): Promise<OtherUserDetails> => {
+    const response = await axiosInstance.get<OtherUserDetails>(
+      `${import.meta.env.VITE_API_BASE_URL}/user/profile/${id}`
+    );
+    // console.log("Response Data:", response.data); // Ensure this is an `OtherUserDetails` object
+    return response.data;
+  };
+  
+  
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, loadingAuth, user, setUser }}
+      value={{ isAuthenticated, setIsAuthenticated, loadingAuth, user, setUser, selectUser }}
     >
       {children}
     </AuthContext.Provider>
