@@ -1,27 +1,27 @@
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { User, useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { Avatar, Box, Card,  CardContent,   Paper, Typography } from "@mui/material";
 import Loading from "../../components/Loading";
 
 
-interface OtherUserDetails {
-  bio: string;
-  birthDate: string;
-  createdAt: string;
-  email: string;
-  followers: string[];
-  name: string;
-  password: string;
-  updatedAt: string;
-  profilePic: string;
-  _id: string;
-}
+// interface OtherUserDetails {
+//   bio: string;
+//   birthDate: string;
+//   createdAt: string;
+//   email: string;
+//   followers: string[];
+//   name: string;
+//   password: string;
+//   updatedAt: string;
+//   profilePic: string;
+//   _id: string;
+// }
 
 const OtherProfile = () => {
   const { id } = useParams();
   const { selectUser } = useAuth();
-  const [selectedUser, setSelectedUser] = useState<OtherUserDetails | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +35,7 @@ const OtherProfile = () => {
 
       try {
         const user = await selectUser(id as string);
-        setSelectedUser(user as OtherUserDetails); // No TypeScript error now
+        setSelectedUser(user); // No TypeScript error now
       } catch (err) {
         console.error("Error fetching user:", err);
         setError("Failed to fetch user details.");

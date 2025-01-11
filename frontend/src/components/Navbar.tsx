@@ -8,7 +8,7 @@ import { useAuth } from "../contexts/AuthContext";
 import axiosInstance from "../axios/axiosInstance";
 
 const Navbar = () => {
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const {setUser, isAuthenticated, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -21,6 +21,16 @@ const Navbar = () => {
           console.log(response.data.message);
           console.log("Status 200 received");
           setIsAuthenticated(false);
+          setUser({
+            _id: "",
+            name:"",
+            email: "",
+            bio: "",
+            birthDate:"",
+            genre:"",
+            followers:[],
+            profilePic: ""
+          })
           navigate("/login");
         } else {
           console.log("Logout Failed");

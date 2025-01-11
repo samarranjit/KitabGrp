@@ -33,7 +33,7 @@ interface AuthContext {
   loadingAuth: boolean;
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
-  selectUser : (id: string)=>object
+  selectUser : (id: string)=>Promise<User>
 }
 
 const AuthContext = createContext<AuthContext | null>(null);
@@ -84,8 +84,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return <Loading /> // Replace with your custom loader component
   }
 
-  const selectUser = async (id: string): Promise<OtherUserDetails> => {
-    const response = await axiosInstance.get<OtherUserDetails>(
+  const selectUser = async (id: string): Promise<User> => {
+    const response = await axiosInstance.get<User>(
       `${import.meta.env.VITE_API_BASE_URL}/user/profile/${id}`
     );
     // console.log("Response Data:", response.data); // Ensure this is an `OtherUserDetails` object

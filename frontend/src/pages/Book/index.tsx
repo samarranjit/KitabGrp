@@ -5,6 +5,7 @@ import { BooksContext } from "../../contexts/BooksInfoContext";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Loading from "../../components/Loading";
 
 
 const Book = () => {
@@ -35,7 +36,9 @@ const Book = () => {
     );
     setFilteredBooks(filtered || []);
   };
-  return (
+
+  if(bookInfo === null) return <Loading />
+  else  return (
     <Box
       sx={{
         display: "flex",

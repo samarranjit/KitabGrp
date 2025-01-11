@@ -168,7 +168,7 @@ const BookPage = () => {
 
   const action = (
     <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleClose}>
+      <Button color="primary" size="small" onClick={handleClose}>
         UNDO
       </Button>
       <IconButton
@@ -202,7 +202,7 @@ const BookPage = () => {
 
     selectBook();
     setLoader(false);
-    console.log(currentBook);
+    // console.log(currentBook);
 
     const checkIfAlreadyLiked = () => {
       const likedStatus = currentBook?.likeCount?.includes(
@@ -237,7 +237,8 @@ const BookPage = () => {
           gap: 2,
           py: 4,
           px: { xs: 3, sm: 5, md: 25 },
-          paddingY: "5rem",
+          // paddingY: "5rem",
+          paddingBottom:"10rem"
         }}
       >
         <Snackbar

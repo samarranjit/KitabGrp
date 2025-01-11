@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import axiosInstance from "../../axios/axiosInstance";
 
 const Login = () => {
-  const { isAuthenticated, loadingAuth, setIsAuthenticated } = useAuth();
+  const { isAuthenticated, loadingAuth, setIsAuthenticated, setUser,selectUser } = useAuth();
 
   const [email, setEmail] = useState<string>(""); 
   const [password, setPassword] = useState<string>(""); 
@@ -27,7 +27,14 @@ const Login = () => {
 
       if (response.status === 200) {
         setSuccess("Thank you for logging in. Redirecting to your dashboard...");
+        // console.log(response.data)
+        const newUser = await selectUser(response.data._id)
         setIsAuthenticated(true)
+        if(newUser){
+          // console.log(newUser)
+          setUser(newUser);
+        }
+
       }
     } catch (err) {
       setError("Invalid credentials. Please try again.");
