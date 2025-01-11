@@ -59,12 +59,12 @@ router.get("/getBookInfo", async (req, res) => {
 
 router.get("/book/:id", async (req, res) => {
   try {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const id = req.params.id;
     // console.log(id);
     const book = await BookDetails.findById(id);
     const user = await userModels.findById(book.reviwerId);
-    console.log(book, user);
+    // console.log(book, user);
     const bookWithReviewer = {
       ...book.toObject(), // Spread all properties of book
       ReviewerName: user.toObject(), // Add user object under ReviewerName key

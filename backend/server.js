@@ -1,5 +1,10 @@
 const express = require("express");
 require("dotenv").config();
+
+
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 const app = express();
 const cors = require("cors")
 const cookieParser = require('cookie-parser');

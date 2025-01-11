@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { Avatar, Box, Card,  CardContent,   Paper, Typography } from "@mui/material";
+import Loading from "../../components/Loading";
 
 
 interface OtherUserDetails {
@@ -13,6 +14,7 @@ interface OtherUserDetails {
   name: string;
   password: string;
   updatedAt: string;
+  profilePic: string;
   _id: string;
 }
 
@@ -46,7 +48,7 @@ const OtherProfile = () => {
   }, [id, selectUser]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -58,7 +60,7 @@ const OtherProfile = () => {
   }
 
   
-  const imageUrl =
+  const imageUrl = selectedUser?.profilePic ||
     "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
 
   return (

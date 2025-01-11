@@ -13,6 +13,7 @@ export interface Reviewer {
   birthDate: string;
   followers: string[];
   __v: string;
+  profilePic:string;
 }
 
 export interface BookInfo {

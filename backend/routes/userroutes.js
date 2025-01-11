@@ -4,6 +4,9 @@ const userModels = require("../models/userModels"); // Adjust the path as needed
 const router = express.Router();
 const jwt= require("jsonwebtoken");
 const authenticate = require("../middleware/authMiddleware");
+const cloudinary = require("../cloudinary/cloudinary.js");
+const upload = require("../middleware/multer.js");
+
 
 router.post("/signup", async (req, res) => {
     const { name, email, password } = req.body;
@@ -84,7 +87,7 @@ router.get("/login/status", async(req,res)=>{
 
 
 router.get("/logout", (req, res) => {
-    console.log("cookies sent to the backend: ",req.cookies)
+    // console.log("cookies sent to the backend: ",req.cookies)
     try {
         
         return res
@@ -164,4 +167,35 @@ router.post("/profile/edit", async (req, res) => {
     }
 
   })
+
+
+
+  //image upload route:
+
+  router.post("/sendImage", authenticate, upload.single("image"), async (req, res) => {
+
+    cloudinary.uploader.upload(req.file.path, (err, results) => {
+        if (err) {
+            console.error("Cloudinary upload error:", err); // Log the error
+            console.log(err)
+            return res.status(500).json({
+                success: false,
+                message: "Error Uploading Image to the Database"
+            })
+        }
+        else {
+
+            console.log("Cloudinary uploaded image"); // Log the result
+        }
+
+
+        return res.status(200).json({
+            success: true,
+            message: "Uploaded image to database",
+            data: results
+
+        })
+    })
+}
+);
 module.exports = router;

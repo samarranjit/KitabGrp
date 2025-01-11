@@ -202,7 +202,7 @@ const BookPage = () => {
 
     selectBook();
     setLoader(false);
-    // console.log(currentBook);
+    console.log(currentBook);
 
     const checkIfAlreadyLiked = () => {
       const likedStatus = currentBook?.likeCount?.includes(
@@ -264,7 +264,7 @@ const BookPage = () => {
           }}
         >
           <img
-            src="https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"
+            src={"https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"}
             alt="Book Cover"
             style={{
               width: "100%",
@@ -311,7 +311,7 @@ const BookPage = () => {
           {/* Reviewer Details */}
           <Box display="flex" alignItems="center" gap={2}>
             <Avatar
-              src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+              src={currentBook?.ReviewerName?.profilePic || "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"}
               alt={currentBook?.ReviewerName?.name || "Anonymous"}
               sx={{ width: 56, height: 56 }}
             />

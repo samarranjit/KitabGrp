@@ -45,6 +45,7 @@ const AddBook = () => {
       bio: "",
       birthDate: "",
       followers: [],
+      profilePic:"",
       __v: "",
     },
     reviwerId: "",
