@@ -10,12 +10,12 @@ import {
   Input,
 } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
 import uploadImage from "../../components/ImpFunctions";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
-import Loading from "../../components/Loading";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

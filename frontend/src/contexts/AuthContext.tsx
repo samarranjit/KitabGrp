@@ -3,17 +3,6 @@ import axiosInstance from "../axios/axiosInstance";
 import Loading from "../components/Loading";
 
 
-interface OtherUserDetails {
-  bio: string;
-  birthDate: string;
-  createdAt: string;
-  email: string;
-  followers: string[];
-  name: string;
-  password: string;
-  updatedAt: string;
-  _id: string;
-}
 
  export interface User {
   name: string;
