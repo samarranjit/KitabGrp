@@ -19,6 +19,7 @@ import { BookInfoProvider } from "./contexts/BooksInfoContext";
 import BookPage from "./pages/Book/BookPage";
 import EditBook from "./pages/Book/EditBook";
 import OtherProfile from "./pages/Users/OtherProfile";
+import NotFound from "./pages/404/NotFound";
 
 function App() {
   const { isAuthenticated, loadingAuth } = useAuth();
@@ -93,6 +94,12 @@ function App() {
               <BookInfoProvider>
                 <OtherProfile />
               </BookInfoProvider>
+            }
+          />
+          <Route
+            path="*"
+            element={
+                <NotFound/>
             }
           />
         </Routes>

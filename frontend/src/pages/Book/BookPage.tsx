@@ -11,7 +11,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
-import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 
 import Loading from "../../components/Loading";
 import axiosInstance from "../../axios/axiosInstance";
@@ -21,23 +21,25 @@ import ThumbUpOffAltTwoToneIcon from "@mui/icons-material/ThumbUpOffAltTwoTone";
 import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
 // import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 import HowToRegIcon from "@mui/icons-material/HowToReg";
-import CloseIcon from '@mui/icons-material/Close';
-
+import CloseIcon from "@mui/icons-material/Close";
 
 const BookPage = () => {
   const user = useAuth();
 
   const [likedStatus, setLikedStatus] = useState<Boolean>(false);
   const [followedStatus, setFollowedStatus] = useState<Boolean>(false);
-  const [open, setOpen] = React.useState(false);
-  const [snackText, setSnackText]  = React.useState('');
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [snackText, setSnackText] = React.useState("");
   const { id } = useParams();
   const { bookInfo } = BooksContext();
   const [Loader, setLoader] = useState(false);
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
-    console.log(Loader)
+  // console.log(Loader);
+
+  const [open, setOpen] = useState(false);
+
   const handleLikeAction = async () => {
     const response = await axiosInstance.post(
       `${import.meta.env.VITE_API_BASE_URL}/user/book/handleLikeAction`,
@@ -50,14 +52,12 @@ const BookPage = () => {
     if (response.status === 200 && response.data.like === 1) {
       console.log("Sucess: ", response.data.message);
 
-      setSnackText(response.data.message)
-      setOpen(true)
+      setSnackText(response.data.message);
+      setOpen(true);
       setTimeout(() => {
-        
         setOpen(false);
-        setSnackText('');
+        setSnackText("");
       }, 1200);
-
 
       setLikedStatus(true);
 
@@ -75,15 +75,12 @@ const BookPage = () => {
     } else if (response.status === 200 && response.data.like === -1) {
       console.log("Success: ", response.data.message);
 
-      
-      setSnackText(response.data.message)
-      setOpen(true)
+      setSnackText(response.data.message);
+      setOpen(true);
       setTimeout(() => {
-        
-        setSnackText('');
+        setSnackText("");
         setOpen(false);
       }, 1200);
-
 
       setLikedStatus(false);
 
@@ -105,6 +102,10 @@ const BookPage = () => {
     }
   };
 
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   const handleFollowBtn = async () => {
     try {
       console.log("inside follow bt");
@@ -119,27 +120,21 @@ const BookPage = () => {
       if (response && response.status === 200) {
         console.log(response.data.message);
         if (response.data.follow === 1) {
-
-          setSnackText(response.data.message)
-          setOpen(true)
+          setSnackText(response.data.message);
+          setOpen(true);
           setTimeout(() => {
-            
-            setSnackText('');
+            setSnackText("");
             setOpen(false);
           }, 1200);
 
           setFollowedStatus(true);
-          
         } else if (response.data.follow === -1) {
-
-          setSnackText(response.data.message)
-          setOpen(true)
+          setSnackText(response.data.message);
+          setOpen(true);
           setTimeout(() => {
-            
-            setSnackText('');
+            setSnackText("");
             setOpen(false);
           }, 1200);
-
 
           setFollowedStatus(false);
         }
@@ -151,10 +146,10 @@ const BookPage = () => {
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason,
+    reason?: SnackbarCloseReason
   ) => {
-    console.log(event)
-    if (reason === 'clickaway') {
+    console.log(event);
+    if (reason === "clickaway") {
       return;
     }
 
@@ -176,9 +171,6 @@ const BookPage = () => {
       </IconButton>
     </React.Fragment>
   );
-
-
-
 
   useEffect(() => {
     setLoader(true);
@@ -221,7 +213,11 @@ const BookPage = () => {
   // console.log(currentBook?.likeCount?.length);
 
   if (currentBook === undefined) {
-    return <Box height={"100vh"}> <Loading /></Box>;
+    return (
+      <Box height={"100vh"}>
+        <Loading />
+      </Box>
+    );
   } else {
     return (
       <Box
@@ -233,17 +229,70 @@ const BookPage = () => {
           py: 4,
           px: { xs: 3, sm: 5, md: 25 },
           // paddingY: "5rem",
-          paddingBottom:"10rem"
+          paddingBottom: "10rem",
         }}
       >
+
+        {// this is the deletion dialogue box
+        }
+        {alertOpen ? (
+          <Box
+            position={"fixed"}
+            width={"100vw"}
+            zIndex={2}
+            height={"100vh"}
+            top={"0"}
+            left={"0"}
+            sx={{
+              backgroundColor: "rgba(0,2,35,0.5)",
+            }}
+          >
+            <Box
+              zIndex={3}
+              position={"fixed"}
+              height={"20vh"}
+              // width={"50vw"}
+              width={{ xs: "90vw", sm: "50vw" }}
+              display={"flex"}
+              flexDirection={"column"}
+              gap={3}
+              alignItems={"center"}
+              justifyContent={"center"}
+              top={"50%"}
+              left={"50%"}
+              textAlign={"center"}
+              border={"1px solid rgb(25, 118, 210,0.58)"}
+              sx={{
+                background:
+                  "linear-gradient(135deg, rgba(255, 69, 58, 0.9), rgba(245, 132, 114, 0.9))",
+                transform: "translate(-50%,-50%)",
+              }}
+            >
+              <Box color={"#fcfcfc"} textAlign={"center"}>
+                <Typography fontSize={"xl"}>
+                  
+                Do you really wanna delete review for{" "}
+                <strong> {currentBook?.title}</strong>?
+                </Typography>
+              </Box>
+              <Box display={"flex"} gap={3}>
+                <Button variant="contained" color="error" onClick={handleDelete}>
+                  Delete
+                </Button>
+                <Button variant="contained" onClick={()=>setAlertOpen(false)}>Cancel</Button>
+              </Box>
+            </Box>
+          </Box>
+        ) : null}
+
         <Snackbar
           open={open}
           autoHideDuration={6000}
           onClose={handleClose}
-          message= {`${snackText}`}
+          message={`${snackText}`}
           action={action}
           sx={{
-            backgroundColor:"white"
+            backgroundColor: "white",
           }}
         />
         {/* Left Section: Cover Image and Book Details */}
@@ -260,7 +309,10 @@ const BookPage = () => {
           }}
         >
           <img
-            src={currentBook.image || "https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"}
+            src={
+              currentBook.image ||
+              "https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"
+            }
             alt="Book Cover"
             style={{
               width: "100%",
@@ -307,7 +359,10 @@ const BookPage = () => {
           {/* Reviewer Details */}
           <Box display="flex" alignItems="center" gap={2}>
             <Avatar
-              src={currentBook?.ReviewerName?.profilePic || "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"}
+              src={
+                currentBook?.ReviewerName?.profilePic ||
+                "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+              }
               alt={currentBook?.ReviewerName?.name || "Anonymous"}
               sx={{ width: 56, height: 56 }}
             />
@@ -332,34 +387,30 @@ const BookPage = () => {
                 alignItems={"right"}
                 textAlign={"center"}
               >
-
-                {
-                  (user?.user?._id === currentBook?.ReviewerName?._id) ?
-                   null:
-
-                <Box>
-                  <Button
-                    sx={{
-                      padding: "4.5px",
-                      borderRadius: "50%",
-                      cursor: "pointer",
-                      width: "35px",
-                      height: "35px",
-                    }}
-                    onClick={handleFollowBtn}
-                  >
-                    {followedStatus ? (
-                      <HowToRegIcon
-                        sx={{
-                          borderRadius: "50%",
-                        }}
-                      />
-                    ) : (
-                      <PersonAddAlt1OutlinedIcon />
-                    )}
-                  </Button>
-                </Box>
-                }
+                {user?.user?._id === currentBook?.ReviewerName?._id ? null : (
+                  <Box>
+                    <Button
+                      sx={{
+                        padding: "4.5px",
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                        width: "35px",
+                        height: "35px",
+                      }}
+                      onClick={handleFollowBtn}
+                    >
+                      {followedStatus ? (
+                        <HowToRegIcon
+                          sx={{
+                            borderRadius: "50%",
+                          }}
+                        />
+                      ) : (
+                        <PersonAddAlt1OutlinedIcon />
+                      )}
+                    </Button>
+                  </Box>
+                )}
               </Grid>
             </Grid>
           </Box>
@@ -398,14 +449,24 @@ const BookPage = () => {
           <Typography fontWeight="bold">Review:</Typography>
           {user?.isAuthenticated &&
             user?.user._id === currentBook?.ReviewerName?._id && (
-              <Button variant="contained">
-                <Link
-                  to={`/user/books/edit/${currentBook._id}`}
-                  style={{ width: "100%" }}
+              <>
+                <Button variant="contained">
+                  <Link
+                    to={`/user/books/edit/${currentBook._id}`}
+                    style={{ width: "100%" }}
+                  >
+                    Edit
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={()=>setAlertOpen(true)}
                 >
-                  Edit
-                </Link>
-              </Button>
+                  Delete
+                </Button>
+              </>
             )}
           {currentBook?.rating ? (
             <Rating
