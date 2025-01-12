@@ -1,4 +1,4 @@
-import { Suspense, createContext, useContext, useEffect, useState } from "react";
+import {  createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
 
 export interface Reviewer {

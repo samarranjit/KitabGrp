@@ -37,7 +37,7 @@ const BookPage = () => {
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
-
+    console.log(Loader)
   const handleLikeAction = async () => {
     const response = await axiosInstance.post(
       `${import.meta.env.VITE_API_BASE_URL}/user/book/handleLikeAction`,

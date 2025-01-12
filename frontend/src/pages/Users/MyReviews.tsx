@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material'
-import Loading from '../../components/Loading'
 
 const MyReviews = () => {
   return (
