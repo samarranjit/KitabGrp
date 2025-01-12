@@ -8,7 +8,7 @@ const Loading = ({ message = "Loading..." }: { message?: string }) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh", // Full viewport height
+        height: "100%", // Full viewport height
         gap: 2,
       }}
     >

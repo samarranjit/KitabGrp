@@ -1,6 +1,7 @@
 
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Loading from './Loading';
 // import Loader from '../components/Loader';
 
 
@@ -11,7 +12,7 @@ const ProtectedRoutes = ({ children }:{children:React.ReactNode}) => {
     // console.log("Loading: ",loadingAuth)
     
     if (loadingAuth) 
-    return <div>Loading...</div>
+    return <Loading/>
     if (isAuthenticated)
     return <>{children}</>;
     else

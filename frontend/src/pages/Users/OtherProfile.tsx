@@ -5,18 +5,6 @@ import { Avatar, Box, Card,  CardContent,   Paper, Typography } from "@mui/mater
 import Loading from "../../components/Loading";
 
 
-// interface OtherUserDetails {
-//   bio: string;
-//   birthDate: string;
-//   createdAt: string;
-//   email: string;
-//   followers: string[];
-//   name: string;
-//   password: string;
-//   updatedAt: string;
-//   profilePic: string;
-//   _id: string;
-// }
 
 const OtherProfile = () => {
   const { id } = useParams();

@@ -24,7 +24,7 @@ const bookSchema = new mongoose.Schema({
     type: [String], // Array of genres (e.g., ['Fiction', 'Mystery'])
     required: true,
   },
-  coverImage: {
+  image: {
     type: String, // URL to the book's cover image stored in Cloudinary
     required: false,
   },

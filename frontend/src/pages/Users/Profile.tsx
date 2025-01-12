@@ -14,8 +14,8 @@ import React from "react";
 import { useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
 import uploadImage from "../../components/ImpFunctions";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -71,7 +71,7 @@ const Profile = () => {
   };
 
   const handleSave = async () => {
-    const profilePic = image ? await uploadImage(image) : user?.profilePic;
+    const profilePic = image ? await uploadImage(image,'Profile_Pic') : user?.profilePic;
     console.log("Profile Picture: ", profilePic);
 
     console.log("profile pic:", profilePic);

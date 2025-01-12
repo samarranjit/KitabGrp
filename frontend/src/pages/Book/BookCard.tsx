@@ -23,12 +23,13 @@ const BookCard = ({ book }: BookCardProps) => {
       justifyContent={"center"}
       alignContent={"center"}
     >
-      <Card sx={{ maxWidth: 345, width: "100%" }}>
+      <Card sx={{ maxWidth: 345, width: "100%"}}>
+
         <CardMedia
-          sx={{ height: 140 }}
+          sx={{ height: '250px', maxwidth:"100%", width:"70%", marginX:"auto" }}
           image={
-            book?.coverImage
-              ? book?.coverImage
+            book?.image
+              ? book?.image
               : "https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"
           }
           title="green iguana"
@@ -48,7 +49,7 @@ const BookCard = ({ book }: BookCardProps) => {
         </CardContent>
         <CardActions>
           <Button size="small">Share</Button>
-          <Link to={`/`}>
+          <Link to={`/user/books/book/${book?._id}`}>
             <Button size="small">Learn More</Button>
           </Link>
         </CardActions>

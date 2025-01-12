@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
 import Loading from "../components/Loading";
+import { Box } from "@mui/material";
 
 
 
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   if (loadingAuth) {
-    return <Loading /> // Replace with your custom loader component
+    return <Box height={"100vh"}> <Loading /></Box> // Replace with your custom loader component
   }
 
   const selectUser = async (id: string): Promise<User> => {

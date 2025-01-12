@@ -9,6 +9,7 @@ import {
   import { useAuth } from "../../contexts/AuthContext";
   import { Link } from "react-router-dom";
   import { BooksContext } from "../../contexts/BooksInfoContext";
+import Loading from "../../components/Loading";
 
 const TopReviews = () => {
     const { user } = useAuth();
@@ -23,6 +24,9 @@ const TopReviews = () => {
     <Typography variant="h6" mb={2}>
       Top Book Reviews:
     </Typography>
+    {
+      (bookInfo === null)? <Box height={'100%'}> <Loading/></Box>
+      : <>
 
     <Box
       sx={{
@@ -92,6 +96,9 @@ const TopReviews = () => {
         </Button>
       </Link>
     </Box>
+    </>
+}
+
   </Box>
   )
 }

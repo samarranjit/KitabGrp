@@ -37,7 +37,7 @@ const Book = () => {
     setFilteredBooks(filtered || []);
   };
 
-  if(bookInfo === null) return <Loading />
+  if(bookInfo === null) return <Box height={"100vh"}> <Loading /></Box>
   else  return (
     <Box
       sx={{
@@ -94,7 +94,7 @@ const Book = () => {
         <>
         <Grid container spacing={3} justifyContent="left" alignContent={"center"} paddingBottom="5rem">
           {bookInfo &&
-            bookInfo.map((book) => (
+            bookInfo.reverse().map((book) => (
               <Grid
                 key={book?.title}
                 item

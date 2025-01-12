@@ -1,6 +1,5 @@
 import { Suspense, createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "../axios/axiosInstance";
-import Loading from "../components/Loading";
 
 export interface Reviewer {
   _id: string;
@@ -22,7 +21,7 @@ export interface BookInfo {
     author?: string;
     review?: string;
     genre?: string[];
-    coverImage?: string;
+    image?: string;
     publishedDate?: string;
     ReviewerName: Reviewer;
     rating?: number | null;
@@ -64,9 +63,7 @@ export const BookInfoProvider = ({children} : { children: React.ReactNode })=>{
 
     return(
         <BooksInfoContext.Provider value={{bookInfo, setBookInfo}}>
-          <Suspense fallback={<Loading/>}>
             {children}
-          </Suspense>
         </BooksInfoContext.Provider>
     )
 }

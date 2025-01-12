@@ -173,8 +173,10 @@ router.post("/profile/edit", async (req, res) => {
   //image upload route:
 
   router.post("/sendImage", authenticate, upload.single("image"), async (req, res) => {
-
-    cloudinary.uploader.upload(req.file.path, (err, results) => {
+    const {Folder} = req.body;
+    console.log("Req :",Folder)
+    console.log("Req.file :",req.file)
+    cloudinary.uploader.upload(req.file.path,{folder: Folder}, (err, results) => {
         if (err) {
             console.error("Cloudinary upload error:", err); // Log the error
             console.log(err)

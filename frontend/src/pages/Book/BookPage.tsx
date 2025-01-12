@@ -31,11 +31,6 @@ const BookPage = () => {
   const [followedStatus, setFollowedStatus] = useState<Boolean>(false);
   const [open, setOpen] = React.useState(false);
   const [snackText, setSnackText]  = React.useState('');
-
-
-  // console.log("User: ",user && user.user)
-
-  // console.log(user && user.user._id )
   const { id } = useParams();
   const { bookInfo } = BooksContext();
   const [Loader, setLoader] = useState(false);
@@ -225,8 +220,8 @@ const BookPage = () => {
 
   // console.log(currentBook?.likeCount?.length);
 
-  if (Loader === true) {
-    return <Loading />;
+  if (currentBook === undefined) {
+    return <Box height={"100vh"}> <Loading /></Box>;
   } else {
     return (
       <Box
@@ -265,12 +260,12 @@ const BookPage = () => {
           }}
         >
           <img
-            src={"https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"}
+            src={currentBook.image || "https://i.fbcd.co/products/resized/resized-750-500/ae2d64e634f5beaa6f0e867d529ece28f0504e9e24fc4d5e0d6fd21f0a05df7f.jpg"}
             alt="Book Cover"
             style={{
               width: "100%",
               maxWidth: "500px", // Larger width for medium and large screens
-              height: "200px", // Maintain aspect ratio
+              // height: "200px", // Maintain aspect ratio
               maxHeight: "800px",
               objectFit: "cover",
               borderRadius: "8px",
