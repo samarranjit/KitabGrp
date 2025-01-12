@@ -13,7 +13,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import React from "react";
 import { useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
-import uploadImage from "../../components/ImpFunctions";
+import {uploadImage} from "../../components/ImpFunctions";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 

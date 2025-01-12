@@ -200,4 +200,47 @@ router.post("/profile/edit", async (req, res) => {
     })
 }
 );
+
+
+
+//iamge deletion route endpoint:
+
+
+router.post('/deleteImage', async (req, res) => {
+  const { imageUrls } = req.body;
+
+  console.log("Image URL received in the backend:", imageUrls);
+
+  
+  try {
+      // Extract the public ID from the Cloudinary URL
+      console.log("Inside try catch in the endpoint")
+      const match = imageUrls.match(/\/upload\/(?:v\d+\/)?([^/.]+\/[^/.]+)/);
+      console.log(match? match[1] : "match not found")
+      const publicId = match ? match[1] : null;
+
+      if (!publicId) {
+          return res.status(400).json({ error: `Unable to extract public ID from URL: ${imageUrls}` });
+      }
+
+      console.log("Extracted PublicId:", publicId);
+
+      // Delete the image using Cloudinary SDK
+      const result = await cloudinary.uploader.destroy(publicId);
+
+      res.status(200).json({ 
+          success: true, 
+          message: 'Image deleted successfully.', 
+          result 
+      });
+  } catch (error) {
+      console.error('Error deleting image:', error.message);
+      res.status(500).json({ 
+          error: 'Failed to delete image.', 
+          details: error.message 
+      });
+  }
+});
+
+
 module.exports = router;

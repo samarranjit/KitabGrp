@@ -1,6 +1,6 @@
 import axiosInstance from "../axios/axiosInstance";
 
-const uploadImage = async (imageFile:File, Folder: string) => {
+export const uploadImage = async (imageFile:File, Folder: string) => {
     console.log("I am inside the upload Image function")
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -20,4 +20,10 @@ const uploadImage = async (imageFile:File, Folder: string) => {
     
 };
 
-export default uploadImage;
+
+export const deleteImage = async (imageUrls:string)=>{
+    const response = await axiosInstance.post(`${import.meta.env.VITE_API_BASE_URL}/user/deleteImage`, {imageUrls});
+
+    return (response);
+
+}

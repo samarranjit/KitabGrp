@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BooksContext } from "../../contexts/BooksInfoContext";
 import { BookInfo } from "../../contexts/BooksInfoContext";
 import {
@@ -22,13 +22,16 @@ import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined
 // import PersonAddAlt1RoundedIcon from '@mui/icons-material/PersonAddAlt1Rounded';
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import CloseIcon from "@mui/icons-material/Close";
+import { deleteImage } from "../../components/ImpFunctions";
 
 const BookPage = () => {
+  const navigate = useNavigate();
   const user = useAuth();
 
   const [likedStatus, setLikedStatus] = useState<Boolean>(false);
   const [followedStatus, setFollowedStatus] = useState<Boolean>(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
+  const [Deleted, setDeleted] = useState(false);
   const [snackText, setSnackText] = React.useState("");
   const { id } = useParams();
   const { bookInfo } = BooksContext();
@@ -36,7 +39,7 @@ const BookPage = () => {
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
-  // console.log(Loader);
+  console.log(Loader);
 
   const [open, setOpen] = useState(false);
 
@@ -104,6 +107,40 @@ const BookPage = () => {
 
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    //deleting image first and then if successful deleting the data
+
+    const res = await deleteImage(`${currentBook?.image}`);
+
+    if (res.status === 200) {
+      console.log(
+        "Deleted the picture now deleting the book data in the database"
+      );
+      const response = await axiosInstance.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/user/book/delete/post/${
+          currentBook?._id
+        }`
+      );
+
+      if (response.status === 200) {
+        console.log(response.data.message);
+        setDeleted(true);
+
+        setTimeout(() => {
+          setDeleted(false)
+          setOpen(false)
+          setAlertOpen(false)
+          navigate("/user/dashboard/books");
+        }, 1200);
+
+      } else {
+        console.log("could not delete the book");
+      }
+    } else {
+      console.log(
+        "Some Error Occured while deleting the image in the database, so the deletion failed"
+      );
+    }
   };
 
   const handleFollowBtn = async () => {
@@ -232,8 +269,8 @@ const BookPage = () => {
           paddingBottom: "10rem",
         }}
       >
-
-        {// this is the deletion dialogue box
+        {
+          // this is the deletion dialogue box
         }
         {alertOpen ? (
           <Box
@@ -268,19 +305,41 @@ const BookPage = () => {
                 transform: "translate(-50%,-50%)",
               }}
             >
-              <Box color={"#fcfcfc"} textAlign={"center"}>
-                <Typography fontSize={"xl"}>
-                  
-                Do you really wanna delete review for{" "}
-                <strong> {currentBook?.title}</strong>?
-                </Typography>
-              </Box>
-              <Box display={"flex"} gap={3}>
-                <Button variant="contained" color="error" onClick={handleDelete}>
-                  Delete
-                </Button>
-                <Button variant="contained" onClick={()=>setAlertOpen(false)}>Cancel</Button>
-              </Box>
+              {Deleted ? (
+                <>
+                  <Box color={"#fcfcfc"} textAlign={"center"}>
+                    <Typography fontSize={"xl"}>
+                      <p>✅✅</p>
+                      Deleted the Review for 
+                      <strong> {currentBook?.title}</strong>. Redirecting you to login... 
+                    </Typography>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Box color={"#fcfcfc"} textAlign={"center"}>
+                    <Typography fontSize={"xl"}>
+                      Do you really wanna delete review for{" "}
+                      <strong> {currentBook?.title}</strong>?
+                    </Typography>
+                  </Box>
+                  <Box display={"flex"} gap={3}>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => setAlertOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </>
+              )}
             </Box>
           </Box>
         ) : null}
@@ -462,7 +521,7 @@ const BookPage = () => {
                 <Button
                   variant="contained"
                   color="error"
-                  onClick={()=>setAlertOpen(true)}
+                  onClick={() => setAlertOpen(true)}
                 >
                   Delete
                 </Button>

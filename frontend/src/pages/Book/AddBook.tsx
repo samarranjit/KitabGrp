@@ -29,7 +29,7 @@ import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import styled from "styled-components";
-import uploadImage from "../../components/ImpFunctions";
+import {uploadImage} from "../../components/ImpFunctions";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

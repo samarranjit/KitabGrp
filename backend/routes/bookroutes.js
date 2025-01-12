@@ -214,4 +214,22 @@ router.post("/handleFollowBtn", async (req, res) => {
   }
 });
 
+
+
+// deleting a book page 
+
+router.delete('/delete/post/:id', async(req,res)=>{
+  const {id }= req.params;
+
+
+  try {
+     await BookDetails.findByIdAndDelete(id);
+    
+     res.status(200).send({success:true, message: "Book Review was deleted successfully"});
+  } catch (error) {
+    res.status(500).send({success: false, message: "Server Error, unable to delete the book review. Please try again later!"});
+  }
+})
+
+
 module.exports = router;
