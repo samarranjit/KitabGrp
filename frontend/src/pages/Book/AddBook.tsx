@@ -65,8 +65,8 @@ const AddBook = () => {
     const { name, value } = e.target;
 
     if (name === "image") {
-      console.log("Name is image");
-      console.log(e?.target?.files?.length)
+      // console.log("Name is image");
+      // console.log(e?.target?.files?.length)
       if (e.target.files && e.target.files.length > 0) {
         setImage(e?.target?.files[0]);
         console.log("Image:", image);

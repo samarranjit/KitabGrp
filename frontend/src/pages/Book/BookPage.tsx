@@ -39,7 +39,7 @@ const BookPage = () => {
   const [currentBook, setCurrentBook] = useState<BookInfo | undefined>(
     undefined
   );
-  console.log(Loader);
+  console.log(Loader?"":"");
 
   const [open, setOpen] = useState(false);
 
