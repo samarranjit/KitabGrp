@@ -1,6 +1,5 @@
 import { Box, Button, Typography, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
-import React from 'react';
 
 const CallToAction = () => {
   return (

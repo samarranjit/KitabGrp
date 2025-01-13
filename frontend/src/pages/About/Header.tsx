@@ -1,4 +1,4 @@
-import { Box, Typography, Container, Grid } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import { motion } from "framer-motion";
 
 const Header = () => {

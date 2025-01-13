@@ -2,7 +2,6 @@ import { Container, Typography, Box, Grid } from "@mui/material";
 import { motion } from "framer-motion";
 import {Public, Star, Diversity1 } from '@mui/icons-material'; // Import icons
 import PeopleIcon from '@mui/icons-material/People';
-import React from "react";
 
 const Vision = () => {
   const coreValues = [

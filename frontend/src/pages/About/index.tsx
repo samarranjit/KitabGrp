@@ -1,5 +1,5 @@
 // import React from "react";
-import { Box, Typography, Container, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 import Header from "./Header";
 import Vision from "./Vision";
